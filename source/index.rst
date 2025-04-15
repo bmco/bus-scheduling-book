@@ -21,8 +21,6 @@ Author: Bruno Oliveira
    Introducao
    chapter1
    chapter2
-   TRLDT
-   MOADE
 
    refs
 
