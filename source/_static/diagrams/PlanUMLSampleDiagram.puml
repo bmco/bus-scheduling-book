@@ -1,0 +1,6 @@
+@startuml
+actor Data
+Data --> (Dy Generator Engine)
+(Dy Generator Engine) --> (Model)
+@enduml
+

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 4: MOADE &mdash; GIST3- Módulo Planeamento 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="References" href="refs.html" />
+    <link rel="prev" title="Capítulo 3: TRLDT" href="TRLDT.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GIST3- Módulo Planeamento
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introducao.html">Introdução</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">Capitulo 1: Serviços de viatura</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">Capítulo 2: Serviços de tripulante</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRLDT.html">Capítulo 3: TRLDT</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Capítulo 4: MOADE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introducao">Introdução</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercicios">Exercicios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ex2-cd-e-mercados">ex2 - CD e mercados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ex3-maquinas-a-preparar">ex3 - Máquinas a preparar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ex4-furos">ex4 - Furos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ex4-furos2">ex4 - Furos2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exemplo-tldrt">Exemplo TLDRT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trabalho-moade">Trabalho MOADE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problema-do-caminho-mais-curto">Problema do caminho mais curto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problema-de-transportes">Problema de transportes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">ex2 - CD e mercados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercicios-programacao-por-metas">Exercicios Programação por metas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Exercicios Programação por metas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dewright-company-part-i">DEWRIGHT COMPANY – Part I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trabalho">Trabalho</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modelo">Modelo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#problema-afetacao">Problema afetação</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problema-da-mochila">Problema da mochila</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problema-de-cobertura">Problema de cobertura</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="refs.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GIST3- Módulo Planeamento</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Capítulo 4: MOADE</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MOADE.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="capitulo-4-moade">
+<h1>Capítulo 4: MOADE<a class="headerlink" href="#capitulo-4-moade" title="Link to this heading"></a></h1>
+<section id="introducao">
+<span id="moade"></span><h2>Introdução<a class="headerlink" href="#introducao" title="Link to this heading"></a></h2>
+<p>Aqui vai ficar a informação relativa à disciplina de MOADE</p>
+</section>
+<section id="exercicios">
+<h2>Exercicios<a class="headerlink" href="#exercicios" title="Link to this heading"></a></h2>
+</section>
+<section id="ex2-cd-e-mercados">
+<h2>ex2 - CD e mercados<a class="headerlink" href="#ex2-cd-e-mercados" title="Link to this heading"></a></h2>
+<p>Conjuntos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de CDs passiveis de serem abertos, } I = \{1,2,3\} \\[1em]
+J &amp;= \text{conjunto de mercados, } J = \{1,2,3\} \\[1em]
+a_{i} &amp;= \text{capacidade em paletes do CD } i \in I \\[1em]
+b_{j} &amp;= \text{procura em paletes do mercado } j \in J \\[1em]
+f_{i} &amp;= \text{investimento para instalar o CD } i \in I \\[1em]
+c_{ij} &amp;= \text{custo de transporte por palete do CD } i \in I \text{ para o mercado } j \in J \\[1em]
+y_{i} &amp;= \text{1 se o CD } i \in I \text{ é instalado, 0 c.c.} \\[1em]
+x_{ij} &amp;= \text{quantidade de paletes transportadas do CD } i \in I \text{ para o mercado } j \in J
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{i \in I}f_i y_i  + \sum_{i \in I}\sum_{j \in J} c_{ij}x_{ij} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{j \in J} x_{ij} \le a_i y_i       &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad \sum_{i \in I} x_{ij} =  b_j            &amp;   \quad \forall  j \in J      \\
+&amp;                       &amp; \quad \sum_{i \in I} y_i = 2                  &amp;   \quad \forall  j \in J      \\
+&amp;                       &amp; \quad y_i \in \{0,1\}                         &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad x_{ij} \in  \mathbb{Z}^{+}_{0}          &amp;   \quad \forall  i \in I, j \in J\end{split}\]</div>
+</section>
+<section id="ex3-maquinas-a-preparar">
+<h2>ex3 - Máquinas a preparar<a class="headerlink" href="#ex3-maquinas-a-preparar" title="Link to this heading"></a></h2>
+<p>Conjuntos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de máquinas a preparar, } I = \{1,2,3\} \\[1em]
+f_{i} &amp;= \text{custo de preparação da máquina } i \in I \\[1em]
+c_{i} &amp;= \text{custo de produção/peça na máquina } i \in I \\[1em]
+a_{i} &amp;= \text{capacidade de produção máxima da máquina } i \in I \\[1em]
+m &amp;= \text{minimo de unidades a produzir se uma máquina é preparada}\\[1em]
+y_{i} &amp;= \text{1 se a máquina } i \in I \text{ é preparada para produção, 0 c.c.} \\[1em]
+x_{i} &amp;= \text{número de peças produzidas pela máquina } i \in I
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{i \in I}f_i y_i  + \sum_{i \in I}\sum_{j \in J} c_{i}x_{i} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{i \in I} x_{i} \ge 2000           &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; x_{i} \le  a_i y_i                            &amp;   \quad \forall  i \in I      \\[1em]
+&amp;                       &amp; \quad x_i \ge m y_i                           &amp;   \quad \forall  i \in I      \\[1em]
+&amp;                       &amp; \quad y_i \in \{0,1\}                         &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad x_{i} \in  \mathbb{Z}^{+}_{0}           &amp;   \quad \forall  i \in I\end{split}\]</div>
+</section>
+<section id="ex4-furos">
+<h2>ex4 - Furos<a class="headerlink" href="#ex4-furos" title="Link to this heading"></a></h2>
+<p>Conjuntos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de locais onde perfurar, } I = \{1,2\} \\[1em]
+J &amp;= \text{conjunto de alvos } J = \{1,2,3,4\} \\[1em]
+f_{i} &amp;= \text{custo de preparação em cada local } i \in I \\[1em]
+c_{ij} &amp;= \text{custo de furar o alvo } j \in J \text{ no local } i \in I \\[1em]
+y_{i} &amp;= \text{1 se o local } i \in I \text{ é escolhido, 0 c.c.} \\[1em]
+x_{ij} &amp;= \text{1 se o alvo } j \in J \text{ localizado no local } i \in I \text{ é selecionado, 0 c.c.}
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{i \in I}f_i y_i  + \sum_{i \in I}\sum_{j \in J} c_{ij}x_{ij} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{i \in I} y_{i} = 1                &amp;                             \\
+&amp;                       &amp; \quad \sum_{j \in J} x_{ij} =  4y_i              &amp;   \quad \forall  i \in I      \\[1em]
+&amp;                       &amp; \quad y_i \in \{0,1\}                         &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad x_{ij} \in \{0,1\}                      &amp;   \quad \forall  i \in I, j \in J\end{split}\]</div>
+</section>
+<section id="ex4-furos2">
+<h2>ex4 - Furos2<a class="headerlink" href="#ex4-furos2" title="Link to this heading"></a></h2>
+<p>Conjuntos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de locais onde perfurar, } I = \{1,2\} \\[1em]
+J &amp;= \text{conjunto de alvos } J = \{1,2,3,4\} \\[1em]
+f_{i} &amp;= \text{custo de preparação em cada local } i \in I \\[1em]
+c_{ij} &amp;= \text{custo de furar o alvo } j \in J \text{ no local } i \in I \\[1em]
+p_{ij} &amp;= \text{probabilidade de explosão no alvo } j \in J \text{ no local } i \in I \\[1em]
+y_{i} &amp;= \text{1 se o local } i \in I \text{ é escolhido, 0 c.c.} \\[1em]
+x_{ij} &amp;= \text{1 se o alvo } j \in J \text{ localizado no local } i \in I \text{ é selecionado, 0 c.c.}
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{i \in I}\sum_{j \in J} p_{ij}x_{ij} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{i \in I} y_{i} = 1                                                    &amp;                                   \\[1em]
+&amp;                       &amp; \quad \sum_{j \in J} x_{ij} \le  4y_i                                             &amp;   \quad \forall  i \in I          \\[1em]
+&amp;                       &amp; \quad \sum_{j \in J} x_{ij} \ge  2y_i                                              &amp;   \quad \forall  i \in I          \\[1em]
+&amp;                       &amp; \quad \sum_{i \in I}f_i y_i  + \sum_{i \in I}\sum_{j \in J} c_{ij}x_{ij} \le 15   &amp;   \quad \forall  i \in I          \\[1em]
+&amp;                       &amp; \quad y_i \in \{0,1\}                                                             &amp;   \quad \forall  i \in I          \\
+&amp;                       &amp; \quad x_{ij} \in \{0,1\}                                                          &amp;   \quad \forall  i \in I, j \in J\end{split}\]</div>
+</section>
+<section id="exemplo-tldrt">
+<h2>Exemplo TLDRT<a class="headerlink" href="#exemplo-tldrt" title="Link to this heading"></a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de CDs passiveis de serem abertos, } I = \{1,2,3\} \\[1em]
+J &amp;= \text{conjunto de mercados, } J = \{1,2,3\} \\[1em]
+a_{i} &amp;= \text{capacidade em paletes do CD } i \in I \\[1em]
+b_{j} &amp;= \text{procura em paletes do mercado } j \in J \\[1em]
+f_{i} &amp;= \text{investimento para instalar o CD } i \in I \\[1em]
+c_{ij} &amp;= \text{custo de transporte por palete do CD } i \in I \text{ para o mercado } j \in J \\[1em]
+y_{i} &amp;= \text{1 se o CD } i \in I \text{ é instalado, 0 c.c.} \\[1em]
+x_{ij} &amp;= \text{quantidade de paletes transportadas do CD } i \in I \text{ para o mercado } j \in J
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{i \in I}f_i y_i  + \sum_{i \in I}\sum_{j \in J} c_{ij}x_{ij} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{j \in J} x_{ij} \le a_i y_i       &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad \sum_{i \in I} x_{ij} =  b_j            &amp;   \quad \forall  j \in J      \\
+&amp;                       &amp; \quad \sum_{i \in I} y_i = 2                  &amp;   \quad \forall  j \in J      \\
+&amp;                       &amp; \quad y_i \in \{0,1\}                         &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad x_{ij} \in  \mathbb{Z}^{+}_{0}          &amp;   \quad \forall  i \in I, j \in J\end{split}\]</div>
+</section>
+<section id="trabalho-moade">
+<h2>Trabalho MOADE<a class="headerlink" href="#trabalho-moade" title="Link to this heading"></a></h2>
+<p>Conjuntos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+L   &amp;= \text{conjunto de fornecedores} \\
+I   &amp;= \text{conjunto de Centros de Distribuição (CD)} \\
+K   &amp;= \text{conjunto de bases logísticas} \\
+G   &amp;= \text{conjunto de cargas/produtos}, \ G = \{GN, GP\} \\
+GN  &amp;= \text{conjunto dos diferentes tipos de carga do tipo granel sólido} \\
+GP  &amp;= \text{conjunto dos diferentes tipos de carga do tipo carga geral} \\
+P   &amp;= \text{conjunto das diferentes classificações de camiões quanto ao tipo de carga a transportar } P=\{0,1\} \\
+    &amp;\text{0-camiões para transportar graneis sólidos e 1-camiões para transportar carga geral}.
+\end{align*}\end{split}\]</div>
+<p>Coeficientes técnicos</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+q_{lg} &amp;= \text{carga } g \in G \text{ produzida pelo fornecedor } l \in L
+\end{align*}\]</div>
+<p>Variaveis de decisão</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+y_i     &amp;= \text{1 se o CD é instalado, 0 c.c} \\
+x_{lig} &amp;= \text{carga } g \in G \text{ a transportar do fornecedor } l \in L \text{ para o CD } i \in I \\
+w_{ikg} &amp;= \text{carga } g \in G \text{ a transportar do CD } i \in I \text{ para a base logistica } k \in K
+\end{align*}\end{split}\]</div>
+<p>Toda a carga <span class="math notranslate nohighlight">\(g \in G\)</span> produzida pelo fronecedor <span class="math notranslate nohighlight">\(l \in L\)</span>, definido como <span class="math notranslate nohighlight">\(q_{lg}\)</span> deve ser destinado
+a um CD <span class="math notranslate nohighlight">\(i \in I\)</span> que tem de ser instalado. A quantidade de carga <span class="math notranslate nohighlight">\(g \in G\)</span> que tem de ser transportada do
+fornecedor <span class="math notranslate nohighlight">\(l \in L\)</span> para o centro de distribuição <span class="math notranslate nohighlight">\(i \in I\)</span>, é representado por <span class="math notranslate nohighlight">\(X_{lig}\)</span>.
+Para transportar a carga por completo é necessário ter <span class="math notranslate nohighlight">\(\sigma_{lip}\)</span> camiões do tipo <span class="math notranslate nohighlight">\(p \in P\)</span> com capacidade
+<span class="math notranslate nohighlight">\(cc\)</span> toneladas.</p>
+<p>Cada CD pode enviar uma quantidade <span class="math notranslate nohighlight">\(w_{ikg}\)</span> de carga nele armazenados para uma base logistica <span class="math notranslate nohighlight">\(k \in K\)</span>,
+sendo para isso necessário <span class="math notranslate nohighlight">\(\delta_{ikg}\)</span> camiões de tipo <span class="math notranslate nohighlight">\(p \in P\)</span> com capacidade <span class="math notranslate nohighlight">\(cc\)</span></p>
+</section>
+<section id="problema-do-caminho-mais-curto">
+<h2>Problema do caminho mais curto<a class="headerlink" href="#problema-do-caminho-mais-curto" title="Link to this heading"></a></h2>
+</section>
+<section id="problema-de-transportes">
+<h2>Problema de transportes<a class="headerlink" href="#problema-de-transportes" title="Link to this heading"></a></h2>
+</section>
+<section id="id1">
+<h2>ex2 - CD e mercados<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Conjuntos</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de fabricas } I = \{A,B\} \\[1em]
+J &amp;= \text{conjunto de armazens, } J = \{1,2,3\} \\[1em]
+a_{i} &amp;= \text{oferta na fabrica } i \in I \\[1em]
+b_{j} &amp;= \text{procura do armazem } j \in J \\[1em]
+c_{ij} &amp;= \text{custo de transporte por unidade da fabrica } i \in I \text{ para o armazem } j \in J \\[1em]
+x_{ij} &amp;= \text{quantidade a transportar da fábrica } i \in I \text{ para o armazem } j \in J
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{i \in I}\sum_{j \in J} c_{ij}x_{ij} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{j \in J} x_{ij} \le a_i           &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad \sum_{i \in I} x_{ij} =  b_j            &amp;   \quad \forall  j \in J      \\
+&amp;                       &amp; \quad x_{ij} \ge 0                            &amp;   \quad \forall  i \in I, j \in J\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = 4x_{A1} + 7x_{A2} + 6x_{A3} + 9x_{B1} + 5x_{B2} + 5x_{B3} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; x_{A1} + x_{A2} + x_{A3} \le 800          &amp;        \\
+&amp;                       &amp; x_{B1} + x_{B2} + x_{B3} \le 700          &amp;         \\
+&amp;                       &amp; x_{A1} + x_{B1}  = 600            &amp;        \\
+&amp;                       &amp; x_{A2} + x_{B2}  = 500            &amp;       \\
+&amp;                       &amp; x_{A3} + x_{B3}  = 300            &amp;        \\
+&amp;                       &amp; \quad x_{A1}, x_{A2}, x_{A3}, x_{B1}, x_{B2}, x_{B3} \ge 0\end{split}\]</div>
+</section>
+<section id="exercicios-programacao-por-metas">
+<h2>Exercicios Programação por metas<a class="headerlink" href="#exercicios-programacao-por-metas" title="Link to this heading"></a></h2>
+<p>lfjdhf</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de produtos } I = \{1,2\} \\[1em]
+J &amp;= \text{conjunto de metas a atingir } I = \{1,2,3\} \\[1em]
+a_{i} &amp;= \text{numero de h.m necessarias para produzir o produto } i \in I \\[1em]
+b_{i} &amp;= \text{numero de h.h necessarias para produzir o produto } i \in I \\[1em]
+x_{i} &amp;= \text{quantidade a produzir do produto } i \in I \\[1em]
+d_{j}^{+} &amp;= \text{desvio por excesso relativamente à meta } j \in J \\[1em]
+d_{j}^{-} &amp;= \text{desvio por defeito relativamente à meta } j \in J
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = 4x_{A1} + 7x_{A2} + 6x_{A3} + 9x_{B1} + 5x_{B2} + 5x_{B3} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 3x_{1} + 2x_{2} \le 60          &amp;        \\
+&amp;                       &amp; x_{B1} + x_{B2} + x_{B3} \le 700          &amp;         \\
+&amp;                       &amp; x_{A1} + x_{B1}  = 600            &amp;        \\
+&amp;                       &amp; x_{A2} + x_{B2}  = 500            &amp;       \\
+&amp;                       &amp; x_{A3} + x_{B3}  = 300            &amp;        \\
+&amp;                       &amp; \quad x_{A1}, x_{A2}, x_{A3}, x_{B1}, x_{B2}, x_{B3} \ge 0\end{split}\]</div>
+</section>
+<section id="id2">
+<h2>Exercicios Programação por metas<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>lfjdhf</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de produtos } I = \{1,2\} \\[1em]
+J &amp;= \text{conjunto de metas a atingir } J = \{1,2,3\} \\[1em]
+a_{i} &amp;= \text{numero de h.m necessarias para produzir o produto } i \in I \\[1em]
+b_{i} &amp;= \text{numero de h.h necessarias para produzir o produto } i \in I \\[1em]
+x_{i} &amp;= \text{quantidade a produzir do produto } i \in I \\[1em]
+d_{j}^{+} &amp;= \text{desvio por excesso relativamente à meta } j \in J \\[1em]
+d_{j}^{-} &amp;= \text{desvio por defeito relativamente à meta } j \in J
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = ... &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 3x_{1} + 2x_{2} \le 60          &amp;        \\[1em]
+&amp;                       &amp; x_{1} + 2x_{2} \le 40          &amp;         \\[1em]
+&amp;                       &amp; 5x_{1} + 2x_{2}  \ge 50            &amp;        \\[1em]
+&amp;                       &amp; x_{1} = 15            &amp;\end{split}\]</div>
+<p>Novo modelo com metas</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = d_{1}^{-} + d_{2}^{+} + d_{3}^{+} + d_{3}^{-}  &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 3x_{1} + 2x_{2} \le 60          &amp;        \\[1em]
+&amp;                       &amp; x_{1} + 2x_{2} + d_{2}^{-} - d_{2}^{+} = 40          &amp;         \\[1em]
+&amp;                       &amp; 5x_{1} + 2x_{2} + d_{1}^{-} - d_{1}^{+} = 50            &amp;        \\[1em]
+&amp;                       &amp; x_{1} + d_{3}^{-} - d_{3}^{+}= 15            &amp; \\[1em]
+&amp;                       &amp; \quad x_{i} \in \mathbb{Z}^{+}_{0}      &amp;  \quad \forall  i \in I \\[1em]
+&amp;                       &amp; \quad d_{j}^{-},d_{j}^{+} \ge 0      &amp;  \quad \forall  j \in J\end{split}\]</div>
+<p>Dado os resultados, a empresa decidiu alterar a meta 2, pretendendo agora que se utilize da melhor forma possível a mão
+de obra na Secção 2 (h.h), sem recorrer nem a substituição de tarefas (), nem exigência de horas extraordinárias</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = d_{1}^{-}  &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 3x_{1} + 2x_{2} \le 60          &amp;        \\[1em]
+&amp;                       &amp; 5x_{1} + 2x_{2} + d_{1}^{-} - d_{1}^{+} = 50            &amp;        \\[1em]
+&amp;                       &amp; \quad x_{i} \in \mathbb{Z}^{+}_{0}      &amp;  \quad \forall  i \in I \\[1em]
+&amp;                       &amp; \quad d_{1}^{-},d_{1}^{+} \ge 0      &amp;\end{split}\]</div>
+<p>Segunda iteração</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = d_{2}^{+}  &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 3x_{1} + 2x_{2} \le 60          &amp;        \\[1em]
+&amp;                       &amp; x_{1} + 2x_{2} + d_{2}^{-} - d_{2}^{+} = 40          &amp;         \\[1em]
+&amp;                       &amp; 5x_{1} + 2x_{2} + d_{1}^{-} - d_{1}^{+} = 50            &amp;        \\[1em]
+&amp;                       &amp; d_{1}^{-} \le 0            &amp;        \\[1em]
+&amp;                       &amp; \quad x_{i} \in \mathbb{Z}^{+}_{0}      &amp;  \quad \forall  i \in I \\[1em]
+&amp;                       &amp; \quad d_{2}^{-},d_{2}^{+} \ge 0      &amp;\end{split}\]</div>
+<p>terceira iteração</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = d_{3}^{+} + d_{3}^{-}  &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 3x_{1} + 2x_{2} \le 60          &amp;        \\[1em]
+&amp;                       &amp; x_{1} + 2x_{2} + d_{2}^{-} - d_{2}^{+} = 40          &amp;         \\[1em]
+&amp;                       &amp; 5x_{1} + 2x_{2} + d_{1}^{-} - d_{1}^{+} = 50            &amp;        \\[1em]
+&amp;                       &amp; x_{1} + d_{3}^{-} - d_{3}^{+}= 15            &amp; \\[1em]
+&amp;                       &amp; d_{1}^{-} \le 0            &amp;        \\[1em]
+&amp;                       &amp; d_{2}^{+} \le 0            &amp;        \\[1em]
+&amp;                       &amp; \quad x_{i} \in \mathbb{Z}^{+}_{0}      &amp;  \quad \forall  i \in I \\[1em]
+&amp;                       &amp; \quad d_{3}^{-},d_{3}^{+} \ge 0      &amp;\end{split}\]</div>
+</section>
+<section id="dewright-company-part-i">
+<h2>DEWRIGHT COMPANY – Part I<a class="headerlink" href="#dewright-company-part-i" title="Link to this heading"></a></h2>
+<p>Modelo generico</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de produtos } I = \{1,2,3\} \\[1em]
+J &amp;= \text{conjunto de metas a atingir } J = \{1,2,3\} \\[1em]
+a_{i} &amp;= \text{lucro/un (milhoes)  produzida do produto } i \in I \\[1em]
+b_{i} &amp;= \text{numero/un (centenas) empregados para produzir o produto } i \in I \\[1em]
+c_{i} &amp;= \text{investimento/un (milhoes) para produzir o produto } i \in I \\[1em]
+p^*_{j} &amp;= \text{penalidade por unidade de desvio * ao objectivo } j \in J \\[1em]
+x_{i} &amp;= \text{quantidade a produzir do produto } i \in I \\[1em]
+d_{j}^{+} &amp;= \text{desvio por excesso relativamente à meta } j \in J \\[1em]
+d_{j}^{-} &amp;= \text{desvio por defeito relativamente à meta } j \in J
+\end{align*}\end{split}\]</div>
+<p>Restrições</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = 5d_{1}^{-} + 2d_{2}^{+} + 4d_{2}^{-} + 3d_{3}^{+} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 12x_1 + 9x_2 +  15x_3 \ge = 125          &amp;        \\[1em]
+&amp;                       &amp; 5x_1 + 3x_2 + 4x_3 = 40           &amp;         \\[1em]
+&amp;                       &amp; 5x_1 + 7x_2 + 8x_3 \le 55           &amp;        \\[1em]
+&amp;                       &amp; x_i, d^+_j, d^-_j \ge 0 &amp; \quad \forall i \in I, j \in J\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{j \in J} p^*_j d^*_j &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \sum_{i \in I} a_i x_i + d_{1}^{-} - d_{1}^{+} = 125          &amp;        \\
+&amp;                       &amp; \sum_{i \in I} b_i x_i + d_{2}^{-} - d_{2}^{+} = 40           &amp;         \\
+&amp;                       &amp; \sum_{i \in I} c_i x_i + d_{3}^{-} - d_{3}^{+} = 55           &amp;        \\
+&amp;                       &amp; x_i, d^*_j \ge 0 &amp; \quad \forall i \in I, j \in J\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = 5d_{1}^{-} + 2d_{2}^{+} + 4d_{2}^{-} + 3d_{3}^{+} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 12x_1 + 9x_2 +  15x_3 + d_{1}^{-} - d_{1}^{+} = 125          &amp;        \\[1em]
+&amp;                       &amp; 5x_1 + 3x_2 + 4x_3 + d_{2}^{-} - d_{2}^{+} = 40           &amp;         \\[1em]
+&amp;                       &amp; 5x_1 + 7x_2 + 8x_3 + d_{3}^{-} - d_{3}^{+} = 55           &amp;        \\[1em]
+&amp;                       &amp; x_i, d^+_j, d^-_j \ge 0 &amp; \quad \forall i \in I, j \in J\end{split}\]</div>
+<p>Formulação da segunda iteração assumindo</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = 2d_{2}^{+} + 4d_{2}^{-}&amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; 12x_1 + 9x_2 +  15x_3 + d_{1}^{-} - d_{1}^{+} = 125          &amp;        \\[1em]
+&amp;                       &amp; 5x_1 + 3x_2 + 4x_3 + d_{2}^{-} - d_{2}^{+} = 40           &amp;         \\[1em]
+&amp;                       &amp; d_{1}^{-} \le 3           &amp;        \\[1em]
+&amp;                       &amp; x_i, d^+_j, d^-_j \ge 0 &amp; \quad \forall i \in I, j \in \{1,2\}\end{split}\]</div>
+</section>
+<section id="trabalho">
+<h2>Trabalho<a class="headerlink" href="#trabalho" title="Link to this heading"></a></h2>
+<p>O artigo propõe um modelo matemático para estruturar a rede logística em 3 níveis: i) fronercedores; ii)centgros de distribuição (CD), como infraestruturas intermédias;
+iii) bases logisticas.</p>
+<section id="modelo">
+<h3>Modelo<a class="headerlink" href="#modelo" title="Link to this heading"></a></h3>
+<p>O objectivo é minimizar os custos fixos de implementação dos CD, os custos de operação dessas infraestruturas, e os custos de transporte entre as instalações na rede.</p>
+<p><strong>Conjuntos</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+L &amp;= \text{conjunto de fornecedores } L = \{1,..., 9\} \\[1em]
+I &amp;= \text{conjunto de centros distribuição } J = \{1,...,8\} \\[1em]
+K &amp;= \text{conjunto de bases logísticas } K = \{1,2,3\} \\[1em]
+GN &amp;= \text{conjunto de diferentes tipos do tipo granel sólido } \\[1em]
+GP &amp;= \text{conjunto de diferentes tipos do tipo granel geral } \\[1em]
+G &amp;= \text{conjunto de diferentes tipos de carga } G = GN \cup GP \\[1em]
+P &amp;= \text{conjunto das diferentes classificações de maioes quanto ao tipo de carga a transportar }
+\end{align*}\end{split}\]</div>
+<p><strong>Parametros</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+q_{lg} &amp;= \text{oferta do fornecedore } l \in l \text{ do tipo } g \in G \\[1em]
+b_{kg} &amp;= \text{procura da base logistica } k \in K \text{ da carga do tipo } g \in G\\[1em]
+cap_{i} &amp;= \text{capacidade do CD } i \in I \\[1em]
+d_{li} &amp;= \text{distância entre o fornecedor } l \in L \text{ e o CD } i \in I \\[1em]
+d_{ik} &amp;= \text{distância entre o CD } i \in I \text{ e a base logistica } k \in K
+\end{align*}\end{split}\]</div>
+<p><strong>Variaveis de decisão</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+y_{i} &amp;= \text{1 se o CD } i \in I \text{ é instalado, 0 c.c.} \\[1em]
+x_{lig} &amp;= \text{qtd do fornecedor } l \in L \text{ para o CD } i \in I \text{do tipo } g \in G \\[1em]
+w_{ikg} &amp;= \text{qtd do CD } i \in I \text{ para o CD } i \in I \text{do tipo } g \in G\\[1em]
+s_{lig} &amp;= \text{qtd de veiculos do fornecedor } l \in L \text{ para o CD } i \in I \text{do tipo } g \in G\\[1em]
+d_{ikg} &amp;= \text{qtd de veiculos do CD } i \in I \text{ para a BL } k \in K \text{do tipo } g \in G
+\end{align*}\end{split}\]</div>
+<p><strong>Modelo</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimizar }     &amp; \quad Z = \sum_{i \in I}f_i y_i  + \sum_{i \in I}o_i y_i      \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{i \in I} x_{lig} = q_{ig}                         &amp;   \quad \forall  l \in L      \\
+&amp;                       &amp; \quad \sum_{i \in I} w_{ikg} =  x_{lig}                       &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad \sum_{l \in L}\sum_{g \in G} x_{lig} \le y_{i}cap_{i}   &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad \sum_{i \in I} w_{ikg} = b_{kg}                          &amp;   \quad \forall  k \in K, g \in G     \\
+&amp;                       &amp; \quad y_i \in \{0,1\}                         &amp;   \quad \forall  i \in I      \\
+&amp;                       &amp; \quad x_{ij} \in  \mathbb{Z}^{+}_{0}          &amp;   \quad \forall  i \in I, j \in J\end{split}\]</div>
+<p>A restição 1 representa a restrição da oferta para cada tipo de carga <span class="math notranslate nohighlight">\(g \in G\)</span>  em cada um dos fornecedores <span class="math notranslate nohighlight">\(l \in L\)</span>.</p>
+<p>A restrição 2 é dedicada aos CD e diz que , para cada CD, a quantidade transportada de cada tipo  vinda dos fornecedores é igual à enviada do CD para as BL. Isto significa que não existe armazenagem nos centros de distribuição (à semana)</p>
+</section>
+</section>
+<section id="problema-afetacao">
+<h2>Problema afetação<a class="headerlink" href="#problema-afetacao" title="Link to this heading"></a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de carpinteiros} \\[1em]
+J &amp;= \text{conjunto de objectos } \\[1em]
+c_{ij} &amp;= \text{tempo do carpinteiro } i \in I \text{ produzir o objecto } j \in J\\[1em]
+x_{ij} &amp;= \text{1 se o carpinteiro } i \in I \text{ produz o objecto } j \in J \text{, 0 c.c}
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ min }     &amp; \quad Z = \sum_{i \in I}\sum_{j \in J} c_{ij}x_{ij} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \sum_{j \in J} x_{ij} = 1     &amp;  \quad \forall  i \in I     \\
+&amp;                       &amp; \sum_{i \in I} x_{ij} = 1     &amp;  \quad \forall  j \in J     \\
+&amp;                       &amp; \quad x_{ij} \in \{0,1\}      &amp;  \quad \forall  i \in I, j \in J\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ min }     &amp; \quad Z =  &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \sum_{j \in J} x_{ij} = 1     &amp;  \quad \forall  i \in I     \\
+&amp;                       &amp; \sum_{i \in I} x_{ij} = 1     &amp;  \quad \forall  j \in J     \\
+&amp;                       &amp; \quad x_{ij} \in \{0,1\}      &amp;  \quad \forall  i \in I, j \in J\end{split}\]</div>
+</section>
+<section id="problema-da-mochila">
+<h2>Problema da mochila<a class="headerlink" href="#problema-da-mochila" title="Link to this heading"></a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto de objectos} \\[1em]
+v_{i} &amp;= \text{valor do objecto } i \in I\\[1em]
+p_{i} &amp;= \text{peso do objecto } i \in I\\[1em]
+a_{i} &amp;= \text{volume do objecto } i \in I\\[1em]
+capP &amp;= \text{capacidade em peso}\\[1em]
+capV &amp;= \text{capacidade em volume}\\[1em]
+x_{i} &amp;= \text{1 se levamos o objecto } i \in I \text{, 0 c.c}
+\end{align*}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ max }     &amp; \quad Z = \sum_{i \in I} v_{i}x_{i} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \sum_{i \in I} p_i x_{i} \le capP     &amp;       \\
+&amp;                       &amp; \sum_{i \in I} a_i x_{i} \le capV     &amp;      \\
+&amp;                       &amp; \quad x_{i} \in \{0,1\}      &amp;  \quad \forall  i \in I\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ max }     &amp; \quad Z = \sum_{i \in I}\sum_{j \in J} v_{ij}x_{i} &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \sum_{i \in I} x_i \ge 2    &amp;       \\
+&amp;                       &amp; x_1 + x_5 \le 1    &amp;      \\
+&amp;                       &amp; x_2 \le x_3   &amp;      \\
+&amp;                       &amp; 2x_2 \le x_4 + x_5   &amp;      \\
+&amp;                       &amp; \quad x_{i} \in \{0,1\}      &amp;  \quad \forall  i \in I\end{split}\]</div>
+</section>
+<section id="problema-de-cobertura">
+<h2>Problema de cobertura<a class="headerlink" href="#problema-de-cobertura" title="Link to this heading"></a></h2>
+<p>Queremos instalar router wi-fi de forma a providenciar sinal a um conjunto de 7 prédios, para os quais se apresenta a
+sua altura máxima. Temos aprovação para construir torres em 5 localizações. Para cada uma apresentamos a altura máxima
+permitida da torre, e os seus custo de instalação.</p>
+<p>Um prédio considera-se coberto se a torre wi-fi está a pelo menos 100 metros do edifício e se situa 10m acima da altura
+máxima do prédio.</p>
+<p>O objectivo é cobrir todos os prédios ao menor custo. Modele o problema de cobertura.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I &amp;= \text{conjunto torres a construir} \\[1em]
+J &amp;= \text{conjunto edificios a cobrir} \\[1em]
+a_{ij} &amp;= 1 \text{ se a torre } i \in I \text{ cobre o edificio } j \in J \text{, 0 c.c}\\[1em]
+x_{i} &amp;= 1 \text{ se a torre } i \in I \text{ cobre o edificio } j \in J \text{, 0 c.c}
+\end{align*}\end{split}\]</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="TRLDT.html" class="btn btn-neutral float-left" title="Capítulo 3: TRLDT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Bruno Oliveira.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

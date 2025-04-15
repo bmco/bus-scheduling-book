@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capitulo 1: Serviços de viatura &mdash; GIST3- Módulo Planeamento 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Capítulo 2: Serviços de tripulante" href="chapter2.html" />
+    <link rel="prev" title="Introdução" href="Introducao.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GIST3- Módulo Planeamento
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introducao.html">Introdução</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Capitulo 1: Serviços de viatura</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introducao">Introdução</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-trip-compatibility">Checking Trip Compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#method-description">Method Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#returns">Returns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mathematical-model">Mathematical Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-overview">Model Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sets-and-indices">Sets and Indices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#network-structure">Network Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decision-variables">Decision Variables</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#flow-variables">Flow Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#distance-variables">Distance Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#objective-function">Objective Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constraints">Constraints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#flow-conservation">Flow Conservation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trip-coverage">Trip Coverage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#distance-based-autonomy">Distance-Based Autonomy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-considerations">Additional Considerations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#depot-rest-periods">Depot Rest Periods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vehicle-type-compatibility">Vehicle Type Compatibility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-notes">Implementation Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solution-output">Solution Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#problema">Problema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modelo-basico">Modelo Básico</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modelo-exacto">Modelo Exacto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#validacao-das-ligacoes-entre-nos">Validação das ligações entre nós</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#seleccao-dos-nos-deverao-ser-considerados-pontos-de-rendicao-na-quebra-de-acordo-com-a-linha">Selecção dos nós deverão ser considerados pontos de rendição na quebra de acordo com a linha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mathematical-formulation">Mathematical Formulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Sets and Indices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Decision Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variable-domains">Variable Domains</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-details">Implementation Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#compatibility-matrix">Compatibility Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variable-declaration-structure">Variable Declaration Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-implementation">Code Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Objective Function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Implementation Details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cost-matrix">Cost Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Code Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#flow-conservation-constraints">Flow Conservation Constraints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">Implementation Notes:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#cover-constraints">Cover Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Implementation Details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mathematical-notation">Mathematical Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vehicle-energy-constraints-extension">Vehicle Energy Constraints Extension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#additional-parameters">Additional Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-decision-variables">New Decision Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-flow-constraints">Energy Flow Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Implementation Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helper-functions">Helper Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#charging-station-extension">Charging Station Extension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sets-and-parameters">Sets and Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Decision Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extended-objective-function">Extended Objective Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-constraints">Additional Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Implementation Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#charging-station-capacity-extension">Charging Station Capacity Extension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Additional Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capacity-constraints">Capacity Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Implementation Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-flow-constraints">Time Flow Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Implementation Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#final-model">Final model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vehicle-scheduling-model">Vehicle Scheduling Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Mathematical Formulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id16">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">Constraints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapter2.html">Capítulo 2: Serviços de tripulante</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRLDT.html">Capítulo 3: TRLDT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MOADE.html">Capítulo 4: MOADE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refs.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GIST3- Módulo Planeamento</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Capitulo 1: Serviços de viatura</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/chapter1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="capitulo-1-servicos-de-viatura">
+<h1>Capitulo 1: Serviços de viatura<a class="headerlink" href="#capitulo-1-servicos-de-viatura" title="Link to this heading"></a></h1>
+<section id="introducao">
+<span id="introducao-cap1"></span><h2>Introdução<a class="headerlink" href="#introducao" title="Link to this heading"></a></h2>
+<p>A criação automática de serviços de viatura pode ser efectuada utilizando dois métodos diferentes, nomeadamente:</p>
+<ul class="simple">
+<li><p>O modelo básico</p></li>
+<li><p>O modelo exacto</p></li>
+</ul>
+<p>The objective function is given by:</p>
+<div class="math notranslate nohighlight" id="equation-equation-1">
+<span class="eqno">(1)<a class="headerlink" href="#equation-equation-1" title="Link to this equation"></a></span>\[Z = \sum_{j \in D} c_{j} x_j + \sum_{i \in T} \lambda_i(1 - a_{ij} x_j)\]</div>
+<p>As shown in equation <a class="reference internal" href="#equation-equation-1">(1)</a>, the objective function…</p>
+<p>O transporte rodoviario e logistica de distribuição no contexto da industria automóvel é de extrema relevância.
+É através destes processos logisticos que se faz o abastecimento da materia prima necessária para os mais diversos
+processos de produção e manutenção de veículos automóveis.</p>
+</section>
+<section id="checking-trip-compatibility">
+<h2>Checking Trip Compatibility<a class="headerlink" href="#checking-trip-compatibility" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">AreCompatible</span></code> method determines if two trips can be executed sequentially by the same vehicle. It considers various constraints including timing, support time requirements, and depot rest stops.</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">AreCompatible</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">EMTrip</span><span class="w"> </span><span class="n">trip_i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_listViableTrips</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="n">EMTrip</span><span class="w"> </span><span class="n">trip_j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_listViableTrips</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">areCompatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">idleTime</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_j</span><span class="p">.</span><span class="n">StartTime</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">EndTime</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//Case when trip_i endNode is the same as trip_j startNode</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">EndNode</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">StartNode</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">idleTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">StartTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">EndTime</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idleTime</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idleTime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">MaxStopTime</span><span class="p">)</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">costPenaltyTerminusStopTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">idleTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyTerminusStopTime</span><span class="p">;</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">LineID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">LineID</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyLineChange</span><span class="p">;</span><span class="w">            </span><span class="c1">//line change cost</span>
+<span class="w">                    </span><span class="p">}</span>
+
+<span class="w">                    </span><span class="n">_c_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">costPenaltyTerminusStopTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costChangeLine</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">_travelTimeBetweentrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">_travelDistanceBetweenTrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">else</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">EndNode</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">_depot</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idleTime</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">MinStopTimeDepot</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">                            </span><span class="n">idleTime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">MaxStopTimeDepot</span><span class="p">)</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="kt">int</span><span class="w"> </span><span class="n">costPenaltyDepotStopTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">idleTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyDepotStopTime</span><span class="p">;</span>
+<span class="w">                            </span><span class="kt">int</span><span class="w"> </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">LineID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">LineID</span><span class="p">)</span>
+<span class="w">                            </span><span class="p">{</span>
+<span class="w">                                </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyLineChange</span><span class="p">;</span>
+<span class="w">                            </span><span class="p">}</span>
+<span class="w">                            </span><span class="n">_c_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">costPenaltyDepotStopTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costChangeLine</span><span class="p">;</span>
+<span class="w">                            </span><span class="n">_travelTimeBetweentrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                            </span><span class="n">_travelDistanceBetweenTrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+
+<span class="w">                            </span><span class="k">return</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                    </span><span class="k">else</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="k">return</span><span class="w"> </span><span class="nf">CheckIfRestAtDepotPossible</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">idleTime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">MaxDelayTime</span><span class="p">)</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">costTerminusStopTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyTerminusStopTime</span><span class="p">;</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">costDelay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">idleTime</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyDelayTime</span><span class="p">;</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">LineID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">LineID</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyLineChange</span><span class="p">;</span>
+<span class="w">                    </span><span class="p">}</span>
+
+<span class="w">                    </span><span class="n">_c_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">costTerminusStopTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costDelay</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costChangeLine</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">_travelTimeBetweentrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">_travelDistanceBetweenTrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">travelTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetBestTravelTime</span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">EndNode</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">StartNode</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+<span class="w">                                             </span><span class="n">trip_i</span><span class="p">.</span><span class="n">EndTime</span><span class="p">,</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">travelTime</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">idleTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">StartTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">EndTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">travelTime</span><span class="p">;</span>
+
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idleTime</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="p">)</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idleTime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">MaxStopTime</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">costStopTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">idleTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyTerminusStopTime</span><span class="p">;</span>
+<span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">costPenaltyemptyTripTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">travelTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyEmptyTrip</span><span class="p">;</span>
+<span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">LineID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">LineID</span><span class="p">)</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyLineChange</span><span class="p">;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                        </span><span class="n">_c_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">costStopTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costPenaltyemptyTripTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costChangeLine</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">_travelTimeBetweentrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">travelTime</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">_travelDistanceBetweenTrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_bestLink</span><span class="p">.</span><span class="n">TotalDistance</span><span class="p">;</span>
+
+<span class="w">                        </span><span class="k">return</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                    </span><span class="k">else</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="k">return</span><span class="w"> </span><span class="nf">CheckIfRestAtDepotPossible</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">else</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">idleTime</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">MaxDelayTime</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">costStopTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyTerminusStopTime</span><span class="p">;</span>
+<span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">costDelay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">SupportTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">idleTime</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyDelayTime</span><span class="p">;</span>
+<span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">costPenaltyemptyTripTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">travelTime</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyEmptyTrip</span><span class="p">;</span>
+<span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">trip_i</span><span class="p">.</span><span class="n">LineID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">trip_j</span><span class="p">.</span><span class="n">LineID</span><span class="p">)</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="n">costChangeLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_instance</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">PenaltyLineChange</span><span class="p">;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                        </span><span class="n">_c_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">costStopTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costPenaltyemptyTripTime</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costDelay</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">costChangeLine</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">_travelTimeBetweentrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">travelTime</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">_travelDistanceBetweenTrips</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_bestLink</span><span class="p">.</span><span class="n">TotalDistance</span><span class="p">;</span>
+
+<span class="w">                        </span><span class="k">return</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nf">CheckIfRestAtDepotPossible</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">areCompatible</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="method-description">
+<h3>Method Description<a class="headerlink" href="#method-description" title="Link to this heading"></a></h3>
+<p>This method evaluates whether two trips (<code class="docutils literal notranslate"><span class="pre">trip_i</span></code> and <code class="docutils literal notranslate"><span class="pre">trip_j</span></code>) can be executed sequentially by checking various constraints:</p>
+<ol class="arabic simple">
+<li><p>Temporal Compatibility
+* Trip j must start after trip i ends (<code class="docutils literal notranslate"><span class="pre">trip_j.StartTime</span> <span class="pre">&gt;=</span> <span class="pre">trip_i.EndTime</span></code>)
+* Considers required support time between trips
+* Handles cases where delay is necessary</p></li>
+<li><p>Spatial Compatibility
+* Handles cases where trips end and start at the same node
+* Evaluates travel time between different nodes
+* Considers depot rest stops when necessary</p></li>
+<li><p>Cost Calculations
+* Terminus stop time penalties
+* Line change penalties
+* Empty trip penalties
+* Delay penalties</p></li>
+</ol>
+</section>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: Index of the first trip in <code class="docutils literal notranslate"><span class="pre">_listViableTrips</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">j</span></code>: Index of the second trip in <code class="docutils literal notranslate"><span class="pre">_listViableTrips</span></code></p></li>
+</ul>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">bool</span></code>: True if the trips are compatible, false otherwise.</p>
+</section>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EMTrip</span></code>: Trip class containing trip information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CheckIfRestAtDepotPossible</span></code>: Helper method for checking depot rest possibilities</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetBestTravelTime</span></code>: Helper method for calculating optimal travel times between nodes</p></li>
+</ul>
+</section>
+</section>
+<section id="mathematical-model">
+<h2>Mathematical Model<a class="headerlink" href="#mathematical-model" title="Link to this heading"></a></h2>
+<p>This section describes the mathematical model implementation for the Multi-Commodity Flow Vehicle Scheduling Problem.</p>
+<section id="model-overview">
+<h3>Model Overview<a class="headerlink" href="#model-overview" title="Link to this heading"></a></h3>
+<p>The model implements a multi-commodity flow formulation where each commodity represents a different vehicle type. The primary goal is to find optimal vehicle schedules while respecting various operational constraints including vehicle autonomy and trip coverage requirements.</p>
+</section>
+<section id="sets-and-indices">
+<h3>Sets and Indices<a class="headerlink" href="#sets-and-indices" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(K\)</span>: Set of vehicle types (network layers)</p></li>
+<li><p><span class="math notranslate nohighlight">\(V_k\)</span>: Set of nodes in layer k</p></li>
+<li><p><span class="math notranslate nohighlight">\(i,j \in V_k\)</span>: Nodes in layer k</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span>: Set of trips to be covered</p></li>
+</ul>
+</section>
+<section id="network-structure">
+<h3>Network Structure<a class="headerlink" href="#network-structure" title="Link to this heading"></a></h3>
+<p>Each layer k represents a specific vehicle type and contains:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(|T|\)</span> nodes representing trip start points (0 to <a href="#id18"><span class="problematic" id="id19">|T|</span></a>-1)</p></li>
+<li><p><span class="math notranslate nohighlight">\(|T|\)</span> nodes representing trip end points (<a href="#id20"><span class="problematic" id="id21">|T|</span></a> to 2|T|-1)</p></li>
+<li><p>2 additional nodes representing depot source and sink</p></li>
+<li><p>Total nodes per layer: <span class="math notranslate nohighlight">\(2|T| + 2\)</span></p></li>
+</ul>
+</section>
+<section id="decision-variables">
+<h3>Decision Variables<a class="headerlink" href="#decision-variables" title="Link to this heading"></a></h3>
+<section id="flow-variables">
+<h4>Flow Variables<a class="headerlink" href="#flow-variables" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_{ijk}\)</span>: Flow through arc (i,j) in layer k</p>
+<ul>
+<li><p>Binary variables for regular arcs: <span class="math notranslate nohighlight">\(x_{ijk} \in \{0,1\}\)</span></p></li>
+<li><p>Integer variables for depot-to-depot arcs: <span class="math notranslate nohighlight">\(x_{ijk} \in \{0,\ldots,n_k\}\)</span></p></li>
+<li><p>Where <span class="math notranslate nohighlight">\(n_k\)</span> is the number of vehicles of type k</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="distance-variables">
+<h4>Distance Variables<a class="headerlink" href="#distance-variables" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d_{ik}\)</span>: Accumulated distance at node i in layer k</p></li>
+<li><p>Domain: <span class="math notranslate nohighlight">\(d_{ik} \in [0,A_k]\)</span></p></li>
+<li><p>Where <span class="math notranslate nohighlight">\(A_k\)</span> is the autonomy distance of vehicle type k</p></li>
+</ul>
+</section>
+</section>
+<section id="objective-function">
+<h3>Objective Function<a class="headerlink" href="#objective-function" title="Link to this heading"></a></h3>
+<p>Minimize total operational costs:</p>
+<div class="math notranslate nohighlight">
+\[\min \sum_{k \in K} \sum_{i \in V_k} \sum_{j \in V_k} c_{ijk} x_{ijk}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(c_{ijk}\)</span> represents the operational cost of arc (i,j) in layer k.</p>
+</section>
+<section id="constraints">
+<h3>Constraints<a class="headerlink" href="#constraints" title="Link to this heading"></a></h3>
+<section id="flow-conservation">
+<h4>Flow Conservation<a class="headerlink" href="#flow-conservation" title="Link to this heading"></a></h4>
+<p>For each node in each layer, ensure flow balance:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{j \in V_k} x_{ijk} - \sum_{j \in V_k} x_{jik} = 0 \quad \forall i \in V_k, k \in K\]</div>
+</section>
+<section id="trip-coverage">
+<h4>Trip Coverage<a class="headerlink" href="#trip-coverage" title="Link to this heading"></a></h4>
+<p>Ensure each trip is served exactly once across all layers:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{k \in K} x_{i(i+|T|)k} = 1 \quad \forall i \in T\]</div>
+</section>
+<section id="distance-based-autonomy">
+<h4>Distance-Based Autonomy<a class="headerlink" href="#distance-based-autonomy" title="Link to this heading"></a></h4>
+<ol class="arabic">
+<li><p>Source to Trip Connections:</p>
+<div class="math notranslate nohighlight">
+\[d_{source,k} + (d^{depot}_i + d^{trip}_i)x_{source,i,k} \leq d_{i,k} + A_k(1-x_{source,i,k})\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d^{depot}_i\)</span>: Distance from depot to trip i</p></li>
+<li><p><span class="math notranslate nohighlight">\(d^{trip}_i\)</span>: Distance of trip i</p></li>
+<li><p><span class="math notranslate nohighlight">\(A_k\)</span>: Autonomy distance of vehicle type k</p></li>
+</ul>
+</li>
+<li><p>Trip to Trip Connections:</p>
+<p>For direct connections:</p>
+<div class="math notranslate nohighlight">
+\[d_{i,k} + (d_{ij} + d^{trip}_j)x_{ij,k} \leq d_{j,k} + A_k(1-x_{ij,k})\]</div>
+<p>For connections via depot:</p>
+<div class="math notranslate nohighlight">
+\[d_{j,k} \geq (d^{depot}_j + d^{trip}_j)x_{ij,k}\]</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="additional-considerations">
+<h3>Additional Considerations<a class="headerlink" href="#additional-considerations" title="Link to this heading"></a></h3>
+<section id="depot-rest-periods">
+<h4>Depot Rest Periods<a class="headerlink" href="#depot-rest-periods" title="Link to this heading"></a></h4>
+<p>The model handles connections that require rest at the depot:</p>
+<ul class="simple">
+<li><p>If a connection between trips i and j requires depot rest, the accumulated distance is reset</p></li>
+<li><p>Special constraints ensure proper tracking of accumulated distance after depot rest</p></li>
+<li><p>Different treatment in distance constraints for direct connections vs. depot rest connections</p></li>
+</ul>
+</section>
+<section id="vehicle-type-compatibility">
+<h4>Vehicle Type Compatibility<a class="headerlink" href="#vehicle-type-compatibility" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Each network layer represents a specific vehicle type</p></li>
+<li><p>Compatibility between trips and vehicle types is handled through network layer definition</p></li>
+<li><p>Vehicle-specific characteristics (autonomy, capacity) are incorporated in layer-specific constraints</p></li>
+</ul>
+</section>
+</section>
+<section id="implementation-notes">
+<h3>Implementation Notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<p>The model is implemented using Gurobi optimization solver with the following key components:</p>
+<ul class="simple">
+<li><p>Variable declaration using appropriate domains (binary, integer, continuous)</p></li>
+<li><p>Constraint matrix construction reflecting network structure</p></li>
+<li><p>Separate handling of depot connections and regular trip connections</p></li>
+<li><p>Efficient constraint generation for autonomy tracking</p></li>
+</ul>
+</section>
+<section id="solution-output">
+<h3>Solution Output<a class="headerlink" href="#solution-output" title="Link to this heading"></a></h3>
+<p>The solution provides:</p>
+<ul class="simple">
+<li><p>Optimal vehicle schedules for each vehicle type</p></li>
+<li><p>Trip assignments to specific vehicles</p></li>
+<li><p>Accumulated distance tracking at each trip completion</p></li>
+<li><p>Total operational cost</p></li>
+</ul>
+</section>
+</section>
+<section id="problema">
+<span id="problema-cap1"></span><h2>Problema<a class="headerlink" href="#problema" title="Link to this heading"></a></h2>
+</section>
+<section id="modelo-basico">
+<span id="modelobasico-cap1"></span><h2>Modelo Básico<a class="headerlink" href="#modelo-basico" title="Link to this heading"></a></h2>
+</section>
+<section id="modelo-exacto">
+<span id="modeloexato-cap1"></span><h2>Modelo Exacto<a class="headerlink" href="#modelo-exacto" title="Link to this heading"></a></h2>
+<p>Para o método exacto podemos definir os seguintes parametros:</p>
+<section id="validacao-das-ligacoes-entre-nos">
+<h3>Validação das ligações entre nós<a class="headerlink" href="#validacao-das-ligacoes-entre-nos" title="Link to this heading"></a></h3>
+<p>No método <em>validateGraph</em> verificamos se conseguimos, dado o numero máximo de percursos estabelecido pelo utilizador,
+ter ligaçãio entre os diferentes nos presentes na rede. Note-se que, o que se pretende validar, é se todos os bnos têm
+pelo menos um arco a entrar e/ou a sair. Caso estes nós não possuam qualquer arco a entrar ou sair temos um aviso.</p>
+</section>
+</section>
+<section id="seleccao-dos-nos-deverao-ser-considerados-pontos-de-rendicao-na-quebra-de-acordo-com-a-linha">
+<span id="quebraservicoviaturas-cap1"></span><h2>Selecção dos nós deverão ser considerados pontos de rendição na quebra de acordo com a linha<a class="headerlink" href="#seleccao-dos-nos-deverao-ser-considerados-pontos-de-rendicao-na-quebra-de-acordo-com-a-linha" title="Link to this heading"></a></h2>
+<p>Ao contrário do que era feito anteriormente, o utilizador tem agora oportunidade de selecionar
+quais as linhas em que nós considerados como pontos de rendição deverão ser efectivamente considerados
+como tal para permitir a partição dos serviços de viatura de acordo</p>
+</section>
+<section id="mathematical-formulation">
+<h2>Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading"></a></h2>
+<p>This documentation describes the variable declaration for a multi-layer vehicle routing problem implementation.</p>
+<section id="id1">
+<h3>Sets and Indices<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+K &amp;= \text{Set of network layers} \\
+V_k &amp;= \text{Set of vertices in layer } k \in K \\
+T_k &amp;= \text{Set of trips in layer } k \in K \\
+n_k &amp;= |T_k| \text{ (number of trips in layer } k) \\
+|V_k| &amp;= 2n_k + 2 \text{ (including source and sink depot nodes)}
+\end{align*}\end{split}\]</div>
+</section>
+<section id="id2">
+<h3>Decision Variables<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>The primary decision variables are defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}x_{ijk} = \begin{cases}
+\{0,1\} &amp; \text{for regular arcs and trip arcs} \\
+\{0,1,\ldots,m_k\} &amp; \text{for depot return arc}
+\end{cases}\end{split}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(i,j \in V_k\)</span>: vertices in layer k</p></li>
+<li><p><span class="math notranslate nohighlight">\(k \in K\)</span>: network layer</p></li>
+<li><p><span class="math notranslate nohighlight">\(m_k\)</span>: number of vehicles in layer k</p></li>
+</ul>
+</section>
+<section id="variable-domains">
+<h3>Variable Domains<a class="headerlink" href="#variable-domains" title="Link to this heading"></a></h3>
+<p>The variables are defined under different conditions:</p>
+<ol class="arabic">
+<li><p><strong>Regular Network Arcs</strong>:</p>
+<div class="math notranslate nohighlight">
+\[x_{ijk} \in \{0,1\} \quad \forall (i,j,k) \text{ where } (i,j) \text{ is compatible}\]</div>
+</li>
+<li><p><strong>Trip Arcs</strong> (connecting start and end of same trip):</p>
+<div class="math notranslate nohighlight">
+\[x_{ijk} \in \{0,1\} \quad \forall i &lt; n_k, j = i + n_k, k \in K\]</div>
+</li>
+<li><p><strong>Depot Return Arc</strong> (from sink to source):</p>
+<div class="math notranslate nohighlight">
+\[x_{ijk} \in \{0,1,\ldots,m_k\} \quad \text{where } i = |V_k| - 1, j = |V_k| - 2\]</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="implementation-details">
+<h2>Implementation Details<a class="headerlink" href="#implementation-details" title="Link to this heading"></a></h2>
+<section id="compatibility-matrix">
+<h3>Compatibility Matrix<a class="headerlink" href="#compatibility-matrix" title="Link to this heading"></a></h3>
+<p>Variables are only declared when the corresponding arc is feasible according to the compatibility matrix:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExtendedCompatibilityMatrix_ij[i,j] = true
+</pre></div>
+</div>
+</section>
+<section id="variable-declaration-structure">
+<h3>Variable Declaration Structure<a class="headerlink" href="#variable-declaration-structure" title="Link to this heading"></a></h3>
+<p>The variables are implemented as a three-dimensional array <code class="code docutils literal notranslate"><span class="pre">x_ijk[V,V,K]</span></code> where:</p>
+<ul class="simple">
+<li><p>First dimension (i): origin vertex</p></li>
+<li><p>Second dimension (j): destination vertex</p></li>
+<li><p>Third dimension (k): network layer</p></li>
+</ul>
+</section>
+<section id="code-implementation">
+<h3>Code Implementation<a class="headerlink" href="#code-implementation" title="Link to this heading"></a></h3>
+<p>The variable declaration follows this logic:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">x_ijk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBVar</span><span class="p">[</span><span class="n">V</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="p">];</span>
+<span class="c1">// For each layer k:</span>
+<span class="c1">//   For compatible arcs (i,j):</span>
+<span class="c1">//     If trip arc: x_ijk ∈ {0,1}</span>
+<span class="c1">//     If depot return arc: x_ijk ∈ {0,...,m_k}</span>
+<span class="c1">//     Otherwise: x_ijk ∈ {0,1}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All variables are declared only for compatible arcs as defined in the ExtendedCompatibilityMatrix_ij.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The depot return arc (sink → source) has a special domain to allow for multiple vehicles to return to the depot.</p>
+</div>
+<p>[Previous content remains the same…]</p>
+</section>
+</section>
+<section id="id3">
+<h2>Objective Function<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>The problem minimizes the total cost across all network layers:</p>
+<div class="math notranslate nohighlight">
+\[\min \sum_{k \in K} \sum_{i \in V_k} \sum_{j \in V_k} c_{ijk} x_{ijk}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c_{ijk}\)</span>: cost of using arc (i,j) in layer k</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_{ijk}\)</span>: decision variable for using arc (i,j) in layer k</p></li>
+<li><p>The sum is only computed over compatible arcs as defined in ExtendedCompatibilityMatrix_ij</p></li>
+</ul>
+<section id="id4">
+<h3>Implementation Details<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>The objective function is implemented as a linear expression in Gurobi:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Minimize ∑(c_ijk * x_ijk) for all compatible arcs (i,j) in each layer k
+</pre></div>
+</div>
+</section>
+<section id="cost-matrix">
+<h3>Cost Matrix<a class="headerlink" href="#cost-matrix" title="Link to this heading"></a></h3>
+<p>The costs <span class="math notranslate nohighlight">\(c_{ijk}\)</span> are stored in the ExtendedCosts_ij matrix for each layer, where:</p>
+<ul class="simple">
+<li><p>Costs are only defined for compatible arcs</p></li>
+<li><p>Compatibility is determined by ExtendedCompatibilityMatrix_ij[i,j]</p></li>
+<li><p>Each layer k may have different cost values</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The objective function only includes terms for arcs that are marked as compatible in the ExtendedCompatibilityMatrix_ij.</p>
+</div>
+</section>
+<section id="id5">
+<h3>Code Implementation<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>The objective function is constructed as follows:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="n">GRBLinExpr</span><span class="w"> </span><span class="n">objectiveFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBLinExpr</span><span class="p">();</span>
+<span class="c1">// For each layer k:</span>
+<span class="c1">//   For each compatible arc (i,j):</span>
+<span class="c1">//     Add term: cost_ijk * x_ijk</span>
+<span class="c1">// Minimize the resulting expression</span>
+</pre></div>
+</div>
+<p>[Previous content remains the same…]</p>
+</section>
+</section>
+<section id="id6">
+<h2>Constraints<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>The problem includes two main types of constraints: flow conservation constraints and cover constraints.</p>
+<section id="flow-conservation-constraints">
+<h3>Flow Conservation Constraints<a class="headerlink" href="#flow-conservation-constraints" title="Link to this heading"></a></h3>
+<p>For each node in each layer, the flow entering must equal the flow leaving:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{j \in V_k} x_{ijk} - \sum_{j \in V_k} x_{jik} = 0 \quad \forall i \in V_k, \forall k \in K\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p>First sum represents flow leaving node i in layer k</p></li>
+<li><p>Second sum represents flow entering node i in layer k</p></li>
+<li><p>Only compatible arcs (i,j) and (j,i) are considered</p></li>
+</ul>
+<section id="id7">
+<h4>Implementation Notes:<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>For each layer k:
+    For each node i:
+        ∑(x_ijk) - ∑(x_jik) = 0
+        where (i,j) and (j,i) are compatible arcs
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cover-constraints">
+<h3>Cover Constraints<a class="headerlink" href="#cover-constraints" title="Link to this heading"></a></h3>
+<p>Each trip must be covered exactly once across all layers:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{k \in K} \sum_{i \in T_k} x_{i(i+n_k)k} = 1 \quad \forall t \in T\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p>T is the set of all trips</p></li>
+<li><p>T_k is the set of trips in layer k</p></li>
+<li><p>n_k is the number of trips in layer k</p></li>
+<li><p>x_{i(i+n_k)k} represents the arc connecting the start and end nodes of trip i in layer k</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cover constraint ensures that each trip is assigned exactly once, regardless of which layer it appears in.</p>
+</div>
+</section>
+<section id="id8">
+<h3>Implementation Details<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>The constraints are implemented in two main blocks:</p>
+<ol class="arabic">
+<li><p><strong>Flow Conservation</strong>:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// For each layer k:</span>
+<span class="c1">//   For each node i:</span>
+<span class="c1">//     ∑(outgoing arcs) - ∑(incoming arcs) = 0</span>
+<span class="c1">//     where arcs are defined by ExtendedCompatibilityMatrix_ij</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Cover Constraints</strong>:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// For each trip t:</span>
+<span class="c1">//   ∑(trip execution variables across all layers) = 1</span>
+<span class="c1">//   where trip execution is represented by arc (i, i+n_k)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="mathematical-notation">
+<h3>Mathematical Notation<a class="headerlink" href="#mathematical-notation" title="Link to this heading"></a></h3>
+<p>Additional notation used in constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp;\text{Sets:} \\
+&amp;T = \text{Set of all trips} \\
+&amp;T_k = \text{Set of trips in layer } k \\
+&amp;\text{Indices:} \\
+&amp;i,j \in V_k \text{ (nodes in layer k)} \\
+&amp;k \in K \text{ (layers)} \\
+&amp;t \in T \text{ (trips)}
+\end{align*}\end{split}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All constraints are subject to the compatibility matrix ExtendedCompatibilityMatrix_ij, which defines feasible arcs in each layer.</p>
+</div>
+</section>
+</section>
+<section id="vehicle-energy-constraints-extension">
+<h2>Vehicle Energy Constraints Extension<a class="headerlink" href="#vehicle-energy-constraints-extension" title="Link to this heading"></a></h2>
+<section id="additional-parameters">
+<h3>Additional Parameters<a class="headerlink" href="#additional-parameters" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+E_{max} &amp;= \text{Maximum energy capacity of vehicles} \\
+E_{min} &amp;= \text{Minimum energy threshold required at sink node} \\
+e_t &amp;= \text{Energy consumption of trip } t \\
+e_{ij} &amp;= \text{Energy consumption for deadhead trip between nodes } i \text{ and } j
+\end{align*}\end{split}\]</div>
+</section>
+<section id="new-decision-variables">
+<h3>New Decision Variables<a class="headerlink" href="#new-decision-variables" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[E_{ik} = \text{Remaining energy level at node } i \text{ in layer } k\]</div>
+</section>
+<section id="energy-flow-constraints">
+<h3>Energy Flow Constraints<a class="headerlink" href="#energy-flow-constraints" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Initial Energy Constraint</strong> (at source node):</p>
+<div class="math notranslate nohighlight">
+\[E_{sk} = E_{max} \quad \forall k \in K\]</div>
+<p>where s is the source node in layer k</p>
+</li>
+<li><p><strong>Energy Conservation Constraints</strong>:</p>
+<div class="math notranslate nohighlight">
+\[E_{jk} \leq E_{ik} - (e_t + e_{ij})x_{ijk} + M(1-x_{ijk}) \quad \forall (i,j) \in A_k, \forall k \in K\]</div>
+<p>where:
+* M is a large constant
+* e_t is the energy consumption of the trip (if i is a trip node)
+* e_{ij} is the energy consumption of deadhead movement from i to j</p>
+</li>
+<li><p><strong>Final Energy Threshold</strong> (at sink node):</p>
+<div class="math notranslate nohighlight">
+\[E_{tk} \geq E_{min} \quad \forall k \in K\]</div>
+<p>where t is the sink node in layer k</p>
+</li>
+</ol>
+</section>
+<section id="id9">
+<h3>Implementation Notes<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>The model needs to be modified as follows:</p>
+<ol class="arabic">
+<li><p><strong>Variable Declaration</strong>:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>// Add energy state variables
+E_ik = new GRBVar[V, K];
+for (int k = 0; k &lt; K; k++)
+{</p>
+<blockquote>
+<div><p>for (int i = 0; i &lt; V_k; i++)
+{</p>
+<blockquote>
+<div><dl class="simple">
+<dt>E_ik[i,k] = model.AddVar(0.0, E_max, 0.0, GRB.CONTINUOUS,</dt><dd><p>“<a href="#id22"><span class="problematic" id="id23">E_</span></a>” + i + “_” + k);</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</li>
+<li><p><strong>Constraint Addition</strong>:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>// Initial energy at source node
+for (int k = 0; k &lt; K; k++)
+{</p>
+<blockquote>
+<div><dl class="simple">
+<dt>model.AddConstr(E_ik[sourceNode, k] == E_max,</dt><dd><p>“<a href="#id24"><span class="problematic" id="id25">Initial_Energy_Layer_</span></a>” + k);</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+<p>// Energy conservation
+for (int k = 0; k &lt; K; k++)
+{</p>
+<blockquote>
+<div><p>for (int i = 0; i &lt; V_k; i++)
+{</p>
+<blockquote>
+<div><p>for (int j = 0; j &lt; V_k; j++)
+{</p>
+<blockquote>
+<div><p>if (ExtendedCompatibilityMatrix_ij[i,j])
+{</p>
+<blockquote>
+<div><p>double energyConsumption = GetEnergyConsumption(i, j);
+model.AddConstr(</p>
+<blockquote>
+<div><dl class="simple">
+<dt>E_ik[j,k] &lt;= E_ik[i,k] - energyConsumption * x_ijk[i,j,k]</dt><dd><ul class="simple">
+<li><p>M * (1 - x_ijk[i,j,k]),</p></li>
+</ul>
+</dd>
+</dl>
+<p>“<a href="#id26"><span class="problematic" id="id27">Energy_Conservation_</span></a>” + i + “_” + j + “_” + k);</p>
+</div></blockquote>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+<p>// Final energy threshold
+for (int k = 0; k &lt; K; k++)
+{</p>
+<blockquote>
+<div><dl class="simple">
+<dt>model.AddConstr(E_ik[sinkNode, k] &gt;= E_min,</dt><dd><p>“<a href="#id28"><span class="problematic" id="id29">Final_Energy_Layer_</span></a>” + k);</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+</li>
+</ol>
+</section>
+<section id="helper-functions">
+<h3>Helper Functions<a class="headerlink" href="#helper-functions" title="Link to this heading"></a></h3>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">GetEnergyConsumption</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// If i is a trip node, include trip energy consumption</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">tripEnergy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numberTrips</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">trips</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">EnergyConsumption</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Add deadhead movement energy consumption</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">deadheadEnergy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetDeadheadEnergy</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">tripEnergy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">deadheadEnergy</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="charging-station-extension">
+<h2>Charging Station Extension<a class="headerlink" href="#charging-station-extension" title="Link to this heading"></a></h2>
+<section id="sets-and-parameters">
+<h3>Sets and Parameters<a class="headerlink" href="#sets-and-parameters" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp;\text{New Sets:} \\
+&amp;C = \text{Set of charging stations} \\
+&amp;C_k \subseteq V_k = \text{Set of charging station nodes in layer } k \\
+\\
+&amp;\text{New Parameters:} \\
+&amp;r_c = \text{Charging rate at station } c \text{ (energy units per time unit)} \\
+&amp;t_c = \text{Minimum charging time at station } c \\
+&amp;T_c = \text{Maximum charging time at station } c \\
+&amp;f_c = \text{Fixed cost for using charging station } c \\
+&amp;p_c = \text{Cost per energy unit at station } c
+\end{align*}\end{split}\]</div>
+</section>
+<section id="id10">
+<h3>Decision Variables<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp;\text{Charging Variables:} \\
+&amp;y_{ck} = \begin{cases}
+1 &amp; \text{if charging station } c \text{ is used in layer } k \\
+0 &amp; \text{otherwise}
+\end{cases} \\
+&amp;\tau_{ck} \geq 0 = \text{charging time at station } c \text{ in layer } k \\
+&amp;\chi_{ck} \geq 0 = \text{amount of energy charged at station } c \text{ in layer } k
+\end{align*}\end{split}\]</div>
+</section>
+<section id="extended-objective-function">
+<h3>Extended Objective Function<a class="headerlink" href="#extended-objective-function" title="Link to this heading"></a></h3>
+<p>Add charging costs to the original objective:</p>
+<div class="math notranslate nohighlight">
+\[\min \left(\sum_{k \in K} \sum_{i \in V_k} \sum_{j \in V_k} c_{ijk} x_{ijk} + \sum_{k \in K} \sum_{c \in C_k} (f_c y_{ck} + p_c \chi_{ck})\right)\]</div>
+</section>
+<section id="additional-constraints">
+<h3>Additional Constraints<a class="headerlink" href="#additional-constraints" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Charging Station Energy Balance</strong>:</p>
+<div class="math notranslate nohighlight">
+\[E_{jk} = E_{ik} + \chi_{ck} - e_{ij}x_{ijk} \quad \forall c \in C_k, i \in c, j \in V_k, k \in K\]</div>
+</li>
+<li><p><strong>Charging Time Limits</strong>:</p>
+<div class="math notranslate nohighlight">
+\[t_c y_{ck} \leq \tau_{ck} \leq T_c y_{ck} \quad \forall c \in C_k, k \in K\]</div>
+</li>
+<li><p><strong>Energy Charged Relation</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\chi_{ck} = r_c \tau_{ck} \quad \forall c \in C_k, k \in K\]</div>
+</li>
+<li><p><strong>Maximum Charge Limit</strong>:</p>
+<div class="math notranslate nohighlight">
+\[E_{ik} + \chi_{ck} \leq E_{max} \quad \forall c \in C_k, i \in c, k \in K\]</div>
+</li>
+</ol>
+</section>
+<section id="id11">
+<h3>Implementation Notes<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<p>The model needs to be modified as follows:</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Declare new variables</span>
+<span class="n">y_ck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBVar</span><span class="p">[</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="p">];</span>
+<span class="n">tau_ck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBVar</span><span class="p">[</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="p">];</span>
+<span class="n">chi_ck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBVar</span><span class="p">[</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="p">];</span>
+
+<span class="c1">// Initialize variables</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">chargingStations</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">y_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">AddVar</span><span class="p">(</span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="m">1.0</span><span class="p">,</span><span class="w"> </span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span>
+<span class="w">                                </span><span class="s">&quot;y_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">        </span><span class="n">tau_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">AddVar</span><span class="p">(</span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">T_c</span><span class="p">,</span><span class="w"> </span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">GRB</span><span class="p">.</span><span class="n">CONTINUOUS</span><span class="p">,</span>
+<span class="w">                                  </span><span class="s">&quot;tau_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">        </span><span class="n">chi_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">AddVar</span><span class="p">(</span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">E_max</span><span class="p">,</span><span class="w"> </span><span class="m">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">GRB</span><span class="p">.</span><span class="n">CONTINUOUS</span><span class="p">,</span>
+<span class="w">                                  </span><span class="s">&quot;chi_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="charging-station-capacity-extension">
+<h2>Charging Station Capacity Extension<a class="headerlink" href="#charging-station-capacity-extension" title="Link to this heading"></a></h2>
+<section id="id12">
+<h3>Additional Parameters<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp;Q_c = \text{Capacity (number of charging spots) at station } c \\
+\end{align*}\end{split}\]</div>
+</section>
+<section id="capacity-constraints">
+<h3>Capacity Constraints<a class="headerlink" href="#capacity-constraints" title="Link to this heading"></a></h3>
+<p>For each charging station c and layer k, we need to ensure that the number of vehicles simultaneously charging doesn’t exceed the station’s capacity. Given our current formulation, we can express this as:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\sum_{i \in V_k} \sum_{j \in V_k} x_{ijk} \leq Q_c \quad \forall c \in C_k, k \in K\\\text{where } i \text{ is a charging station node}\end{aligned}\end{align} \]</div>
+</section>
+<section id="id13">
+<h3>Implementation Notes<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Add capacity constraints for each charging station</span>
+<span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">chargingStations</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GRBLinExpr</span><span class="w"> </span><span class="n">stationUsage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBLinExpr</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Sum all vehicles using the charging station</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V_k</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V_k</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IsChargingStationNode</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">                    </span><span class="n">ExtendedCompatibilityMatrix_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">stationUsage</span><span class="p">.</span><span class="n">AddTerm</span><span class="p">(</span><span class="m">1.0</span><span class="p">,</span><span class="w"> </span><span class="n">x_ijk</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="n">AddConstr</span><span class="p">(</span><span class="n">stationUsage</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">Q_c</span><span class="p">,</span>
+<span class="w">                       </span><span class="s">&quot;Charging_Capacity_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>[Previous content remains the same until Time Flow Constraints section]</p>
+</section>
+<section id="time-flow-constraints">
+<h3>Time Flow Constraints<a class="headerlink" href="#time-flow-constraints" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Time Propagation</strong> (for non-charging nodes):</p>
+<div class="math notranslate nohighlight">
+\[T_{jk} \geq T_{ik} + (tt_{ij} + st_i)x_{ijk} - M(1-x_{ijk}) \quad \forall i,j \in V_k \setminus C_k, k \in K\]</div>
+</li>
+<li><p><strong>Time Propagation with Charging</strong> (Linearized):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp;T_{jk} \geq T_{ik} + tt_{ij}x_{ijk} + \tau_{ck} - M(1-x_{ijk}) \quad \forall i \in C_k, j \in V_k, k \in K \\
+&amp;\tau_{ck} \leq My_{ck} \quad \forall c \in C_k, k \in K \\
+&amp;\tau_{ck} \geq \tau_{min}y_{ck} \quad \forall c \in C_k, k \in K \\
+&amp;\tau_{ck} \leq \tau_{max}y_{ck} \quad \forall c \in C_k, k \in K
+\end{align*}\end{split}\]</div>
+</li>
+</ol>
+<p>Where:
+* y_{ck} is the binary variable indicating if station c is used in layer k
+* τ_{ck} is now directly constrained by the y_{ck} variable
+* The charging time is added separately from the travel time</p>
+</section>
+<section id="id14">
+<h3>Implementation Notes<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Time flow constraints with charging</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V_k</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IsChargingStation</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetStationIndex</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V_k</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ExtendedCompatibilityMatrix_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="c1">// Linear time flow with charging</span>
+<span class="w">                    </span><span class="n">model</span><span class="p">.</span><span class="n">AddConstr</span><span class="p">(</span>
+<span class="w">                        </span><span class="n">T_ik</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">T_ik</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                        </span><span class="n">tt_ij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_ijk</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                        </span><span class="n">tau_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">-</span>
+<span class="w">                        </span><span class="n">M</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x_ijk</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]),</span>
+<span class="w">                        </span><span class="s">&quot;Time_Flow_Charging_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="c1">// Charging time constraints</span>
+<span class="w">            </span><span class="n">model</span><span class="p">.</span><span class="n">AddConstr</span><span class="p">(</span><span class="n">tau_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">],</span>
+<span class="w">                          </span><span class="s">&quot;Charging_Time_Upper_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">            </span><span class="n">model</span><span class="p">.</span><span class="n">AddConstr</span><span class="p">(</span><span class="n">tau_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">tau_min</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">],</span>
+<span class="w">                          </span><span class="s">&quot;Charging_Time_Lower_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">            </span><span class="n">model</span><span class="p">.</span><span class="n">AddConstr</span><span class="p">(</span><span class="n">tau_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tau_max</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y_ck</span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">],</span>
+<span class="w">                          </span><span class="s">&quot;Charging_Time_Max_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="final-model">
+<h3>Final model<a class="headerlink" href="#final-model" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="vehicle-scheduling-model">
+<span id="ev-scheduling-model"></span><h2>Vehicle Scheduling Model<a class="headerlink" href="#vehicle-scheduling-model" title="Link to this heading"></a></h2>
+<section id="id15">
+<h3>Mathematical Formulation<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<p>Let:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_{i,j,k}\)</span> be a binary decision variable indicating whether an electric vehicle travels from node <span class="math notranslate nohighlight">\(i\)</span> to node <span class="math notranslate nohighlight">\(j\)</span> in layer <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(t_i\)</span> be the time at node <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(e_i\)</span> be the energy level at node <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{charge}_i\)</span> be the charging amount at node <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{timeCharge}_i\)</span> be the charging time at node <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+</ul>
+<section id="id16">
+<h4>Objective Function<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
+<div class="math notranslate nohighlight">
+\[\min \sum_{(i,j,k)} c_{i,j,k} x_{i,j,k} + \sum_i 100 \cdot \text{charge}_i\]</div>
+</section>
+<section id="id17">
+<h4>Constraints<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
+<ol class="arabic">
+<li><p><strong>Flow Conservation:</strong></p>
+<div class="math notranslate nohighlight">
+\[\sum_{j} x_{i,j,k} - \sum_{j} x_{j,i,k} = 0, \quad \forall i, k\]</div>
+</li>
+<li><p><strong>Trip Coverage:</strong></p>
+<div class="math notranslate nohighlight">
+\[x_{0,2,0} = 1, \quad x_{1,3,0} = 1\]</div>
+</li>
+<li><p><strong>Time Constraints:</strong></p>
+<div class="math notranslate nohighlight">
+\[t_{j} \geq t_{i} + d_{i,j} - M(1 - x_{i,j,k}), \quad \forall (i,j,k)\]</div>
+</li>
+<li><p><strong>Energy Conservation:</strong></p>
+<div class="math notranslate nohighlight">
+\[e_j \geq e_i - \lambda x_{i,j,k} + \text{charge}_i, \quad \forall (i,j,k)\]</div>
+</li>
+<li><p><strong>Battery Limits:</strong></p>
+<div class="math notranslate nohighlight">
+\[e_i + \text{charge}_i \leq 100, \quad \forall i\]</div>
+</li>
+<li><p><strong>Charging Constraints:</strong></p>
+<div class="math notranslate nohighlight">
+\[\text{charge}_i = 6.66 \cdot \text{timeCharge}_i, \quad \forall i\]</div>
+</li>
+<li><p><strong>Binary and General Constraints:</strong></p>
+<div class="math notranslate nohighlight">
+\[x_{i,j,k} \in \{0,1\}, \quad x_{9,8,0} \leq 31\]</div>
+</li>
+</ol>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Introducao.html" class="btn btn-neutral float-left" title="Introdução" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="chapter2.html" class="btn btn-neutral float-right" title="Capítulo 2: Serviços de tripulante" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Bruno Oliveira.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

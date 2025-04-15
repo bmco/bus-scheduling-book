@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 2: Serviços de tripulante &mdash; GIST3- Módulo Planeamento 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Capítulo 3: TRLDT" href="TRLDT.html" />
+    <link rel="prev" title="Capitulo 1: Serviços de viatura" href="chapter1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GIST3- Módulo Planeamento
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introducao.html">Introdução</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter1.html">Capitulo 1: Serviços de viatura</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Capítulo 2: Serviços de tripulante</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introducao">Introdução</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#separador-principal">Separador <em>Principal</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parametros-do-modelo">Parâmetros do modelo</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tipos-de-modelo">Tipos de modelo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tipos-de-objectivo">Tipos de objectivo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#separador-opcoes-adicionais">Separador <em>Opções adicionais</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#blocos-de-preparacao">Blocos de preparação</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#problema-crew-scheduling-problem">Problema: Crew scheduling problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exact-model">Exact model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#duty-generator-engine">Duty Generator Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mathematical-formulation">Mathematical formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ui-planeamento-servicos-de-tripulante">UI - Planeamento serviços de tripulante</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nos-como-pontos-de-rendicao-dependente-da-linha">Nós como pontos de rendição dependente da linha</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TRLDT.html">Capítulo 3: TRLDT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MOADE.html">Capítulo 4: MOADE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refs.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GIST3- Módulo Planeamento</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Capítulo 2: Serviços de tripulante</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/chapter2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="capitulo-2-servicos-de-tripulante">
+<h1>Capítulo 2: Serviços de tripulante<a class="headerlink" href="#capitulo-2-servicos-de-tripulante" title="Link to this heading"></a></h1>
+<section id="introducao">
+<span id="introducao-cap2"></span><h2>Introdução<a class="headerlink" href="#introducao" title="Link to this heading"></a></h2>
+<p>O modulo de planeamento automático dos serviços de tripulantes pode ser acedido na barra como indicado na figura
+(see Figure <a class="reference internal" href="#ui-tripulantes-front"><span class="std std-ref">Crew schedule planning UI - Principal tab.</span></a>)</p>
+<p>O UI de planeamento de tripulantes é composto por dois separadores: 1) <em>Principal</em>, e 2) <em>Opções adicionais</em></p>
+</section>
+<section id="separador-principal">
+<h2>Separador <em>Principal</em><a class="headerlink" href="#separador-principal" title="Link to this heading"></a></h2>
+<p>O separador <em>Principal</em> é composto por 6 grandes grupos:</p>
+<ul class="simple">
+<li><p>Parâmetros do modelo</p></li>
+<li><p>Selecção tipos de serviço de tripulante</p></li>
+<li><p>Geração de serviços</p></li>
+<li><p>Execução do modelo</p></li>
+<li><p>Geração de serviços</p></li>
+<li><p>Solução tipos de serviço de tripulante</p></li>
+<li><p>Informação da solução</p></li>
+</ul>
+<figure class="align-center" id="ui-tripulantes-front">
+<a class="reference internal image-reference" href="_static/figures/UI_tripulantes_front.png"><img alt="_static/figures/UI_tripulantes_front.png" src="_static/figures/UI_tripulantes_front.png" /></a>
+<figcaption>
+<p><span class="caption-text">Crew schedule planning UI - <em>Principal</em> tab.</span><a class="headerlink" href="#ui-tripulantes-front" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="parametros-do-modelo">
+<h3>Parâmetros do modelo<a class="headerlink" href="#parametros-do-modelo" title="Link to this heading"></a></h3>
+<section id="tipos-de-modelo">
+<h4>Tipos de modelo<a class="headerlink" href="#tipos-de-modelo" title="Link to this heading"></a></h4>
+<p id="index-1"><span id="index-0"></span>O utilizador pode escolher entre dois tipos de modelo:</p>
+<ul class="simple">
+<li><p><strong>Modelo de partição.</strong> Não permite sobrecobertura. Cada <em>bloco de trabalho</em> tem de ser coberto obrigatoriamente por apenas um serviço de tripulante.</p></li>
+<li><p><strong>Modelo de cobertura.</strong> Permite sobrecobertura. Cada <em>bloco de trabalho</em> tem de ser coberto por pelo menos um serviço de tripulante, mas poderá ser por mais.</p></li>
+</ul>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<ul class="simple">
+<li><p>Podem existir <em>blocos de trabalho</em> que não são cobertos por qualquer serviço de tripulante dado pelo gerador. Os <em>blocos de trabalho</em> que não são cobertos por qualquer serviço de tripulante não são tidos em conta no modelo.</p></li>
+<li><p>No caso dos problemas de partição, e de forma a garantir que existe sempre solução para o problema, criam-se tantos <em>serviços proxy</em> auxiliares quanto o número de <em>blocos de trabalho</em>. Cada um destes serviços apenas cobre um <em>bloco de trabalho</em> e tem um custo de selecção muito elevado a fim de apenas ser seleccionado em último caso. Desta forma garante-se a viabilidade do problema, com a contrapartida de ficarmos com um modelo maior e com implicações ao nível da função objectivo.</p></li>
+<li><p>Dos dois pontos acima resulta que a solução do problema pode ter blocos de trabalho não cobertos.</p></li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-objectivo">
+<h4>Tipos de objectivo<a class="headerlink" href="#tipos-de-objectivo" title="Link to this heading"></a></h4>
+<p id="index-3"><span id="index-2"></span>O utilizador pode escolher 1 de entre 4 objectivos, 2 únicos e 2 multi-objectivo.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Objectivos únicos.</strong></dt><dd><ul>
+<li><p>minimizar o custo (computacional).</p></li>
+<li><p>minimizar o número de serviços utilizados.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Multi-objectivo.</strong></dt><dd><ul>
+<li><p>minimizar primeiro o custo e depois o número de serviços.</p></li>
+<li><p>minimizar primeiro o número de serviços e depois o custo.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No que toca às opções multi-objectivo, utilizamos uma abordagem hierárquica, onde se começa por minimizar o objectivo primário, e depois, utilizando a solução do modelo anterior como restrição, optimiza-se o objectivo secundário.</p>
+</div>
+<figure class="align-center" id="uicrew-parametros-modelo">
+<a class="reference internal image-reference" href="_static/figures/UICrew_parametros_modelo.png"><img alt="_static/figures/UICrew_parametros_modelo.png" src="_static/figures/UICrew_parametros_modelo.png" /></a>
+<figcaption>
+<p><span class="caption-text">Parâmetros do modelo.</span><a class="headerlink" href="#uicrew-parametros-modelo" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+<section id="separador-opcoes-adicionais">
+<h2>Separador <em>Opções adicionais</em><a class="headerlink" href="#separador-opcoes-adicionais" title="Link to this heading"></a></h2>
+<figure class="align-center" id="uicrew-aditionaltab">
+<a class="reference internal image-reference" href="_static/figures/UICrew_aditionalTab.png"><img alt="_static/figures/UICrew_aditionalTab.png" src="_static/figures/UICrew_aditionalTab.png" /></a>
+<figcaption>
+<p><span class="caption-text">Crew schedule planning UI - <em>Opções adicionais</em> tab.</span><a class="headerlink" href="#uicrew-aditionaltab" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="blocos-de-preparacao">
+<h3>Blocos de preparação<a class="headerlink" href="#blocos-de-preparacao" title="Link to this heading"></a></h3>
+<p>O utilizador pode optar por incluir blocos de preparação no inicio do serviço, no fim e/ou blocos de praparação intermédios</p>
+</section>
+</section>
+<section id="problema-crew-scheduling-problem">
+<span id="problema-cap2"></span><h2>Problema: Crew scheduling problem<a class="headerlink" href="#problema-crew-scheduling-problem" title="Link to this heading"></a></h2>
+<p>The crew scheduling problem consists in optimally assigning crews to the vehicles, assuming that vehicle blocks are
+known and that the operational/contractual/union rules are satisfied <span id="id1">[<a class="reference internal" href="refs.html#id55">MP</a>]</span></p>
+</section>
+<section id="exact-model">
+<span id="modeloexato-cap2"></span><h2>Exact model<a class="headerlink" href="#exact-model" title="Link to this heading"></a></h2>
+<p>The solution method encompasses two phases: 1) duties generation; and 2) an exact partitioning model.</p>
+<p>In the first phase, we generate the complete set of feasible duties</p>
+</section>
+<section id="duty-generator-engine">
+<span id="dutygeneratorengine-cap2"></span><h2>Duty Generator Engine<a class="headerlink" href="#duty-generator-engine" title="Link to this heading"></a></h2>
+<p>The duties generator comprises two main phases:</p>
+<ul class="simple">
+<li><p>Construct the sucessor dictionary for each of the workblocks contining the list of all workblocks that may be considered to be a possible sucessor</p></li>
+<li><p>Given the previous sucessor dictionary build all possible duty schedules, starting for every work block</p></li>
+</ul>
+<p>The starting point of the method is the following</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">HtxTipoServ</span><span class="w"> </span><span class="n">tipSer</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">horario</span><span class="p">.</span><span class="n">TServs</span><span class="p">.</span><span class="n">Values</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//Update driver duties parameters if any of the additional preparation work blocks is &gt;0</span>
+
+<span class="w">    </span><span class="c1">//Create the dictionary with every workblock list of sucessor</span>
+<span class="w">    </span><span class="n">buildNewHashSucessor</span><span class="p">(</span><span class="n">dur</span><span class="p">,</span><span class="w"> </span><span class="n">tipSer</span><span class="p">,</span><span class="w"> </span><span class="n">horario</span><span class="p">.</span><span class="n">Viagens</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">//Main function encompassing the dynamic programing method for the incremental creation of the driver duties</span>
+<span class="w">    </span><span class="n">geradorEtapa</span><span class="p">(</span><span class="n">tipSer</span><span class="p">,</span><span class="w"> </span><span class="n">__globalParameters</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">geradorEtapa</span><span class="p">(</span><span class="n">HtxTipoServ</span><span class="w"> </span><span class="n">tipoServico</span><span class="p">,</span><span class="w"> </span><span class="n">GlobalParameters</span><span class="w"> </span><span class="n">globalParameters</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">countTramo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">percentagem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">percentagemAtual</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">NumTramo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__HashTramo</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
+<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">Pecas</span><span class="w"> </span><span class="n">tramo</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">__HashTramo</span><span class="p">.</span><span class="n">Values</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">percentagemAtual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">countTramo</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">NumTramo</span><span class="p">;</span>
+<span class="w">        </span><span class="n">CaminhoEtapa</span><span class="w"> </span><span class="n">caminho</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CaminhoEtapa</span><span class="p">(</span><span class="n">tipoServico</span><span class="p">,</span><span class="w"> </span><span class="n">globalParameters</span><span class="p">);</span>
+<span class="w">        </span><span class="n">caminho</span><span class="p">.</span><span class="n">AddDeleteGeneratedService</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">Caminho_AddDeleteGeneratedService</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">inicioCaminhoValido</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">caminho</span><span class="p">.</span><span class="n">AddPeca</span><span class="p">(</span><span class="n">tramo</span><span class="p">,</span><span class="w"> </span><span class="n">__ListEstacao</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inicioCaminhoValido</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">BuildPathService</span><span class="p">(</span><span class="n">caminho</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">percentagem</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">percentagemAtual</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">percentagem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">percentagemAtual</span><span class="p">;</span>
+<span class="w">            </span><span class="n">UpdateDelegateGerador</span><span class="p">(</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="n">percentagem</span><span class="p">,</span><span class="w"> </span><span class="n">tipoServico</span><span class="p">.</span><span class="n">Nome</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">countTramo</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p id="buildnewhashexplanation">The <cite>buildNewHashSucessor</cite> function is responsible for…</p>
+<div class="highlight-pseudocode notranslate"><div class="highlight"><pre><span></span>FOR tipoServiço IN TiposServiço DO
+    IF prepStart &gt; 0 OR prepEnd &gt; 0 OR prepInterm &gt; 0 THEN
+        UpdateDutyTypeParameters(tipoServiço)
+    ENDIF
+ENDFOR
+</pre></div>
+</div>
+</section>
+<section id="mathematical-formulation">
+<h2>Mathematical formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading"></a></h2>
+<p>The crew scheduling problem can be formulated in several ways (see literature review). The underlying model is simply a set covering/partitioning
+model. The aim is to cover the work blocks defined in the vehicle schedule, with the available feasible duties
+created with the <a class="reference internal" href="#dutygeneratorengine-cap2"><span class="std std-ref">Duty Generator Engine</span></a>, so that the objective function is minimised.</p>
+<p>The <em>Crew Scheduling Problem (CSP)</em> can be formulated as a set covering problem with additional constraints.
+Let <span class="math notranslate nohighlight">\(W\)</span> represent the set of work blocks defined in the vehicle schedule, and <span class="math notranslate nohighlight">\(D\)</span> the set of feasible duties
+generated using the <a class="reference internal" href="#dutygeneratorengine-cap2"><span class="std std-ref">Duty Generator Engine</span></a>, with <span class="math notranslate nohighlight">\(c_d\)</span> representing the cost of using the duty in the solution. Additionally, <span class="math notranslate nohighlight">\(D_w\)</span> represents subsets of duties <span class="math notranslate nohighlight">\(d \in D\)</span>
+that cover work block <span class="math notranslate nohighlight">\(w \in W\)</span>.</p>
+<p>We use binary variables as defined below.</p>
+<div class="math notranslate nohighlight">
+\[x_i = \text{1 if the generated duty } d \in D \text{, 0 otherwise.}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Besides the decision variable <span class="math notranslate nohighlight">\(x_i\)</span>, we also consider 4 additional variables representing the number of services below</p>
+</div>
+<p>the minimum or maximum number or proportion as given by the user (incluir referencia ao UI onde isso se mostra)</p>
+<p>Given the aforementioned notation the <em>SCP</em> can be formulated as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;\mbox{ minimize }     &amp; Z = c_d x_d    &amp;       \\
+\\[1pt]   % Smaller space
+&amp;\mbox{ s.a. }          &amp; \quad \sum_{d \in D_w} x_d = 1  &amp;  \quad \forall  w \in W     \\
+&amp;                       &amp; \quad x_d \in \{0,1\}             &amp;  \quad \forall  d \in D\end{split}\]</div>
+<p>The objective function aims to minimise the total cost of the selected duties. The user can select alternative objective
+functions. See Alternative objective functions.</p>
+<p>The first set of constraints are covering constraints asserting that each task must be covered by at least
+one duty. If the inequality becomes an equality, we are stating that a task must
+be covered by exactly one duty, and in this case we are in the presence of a set partitioning
+problem instead of a set covering problem. As this is a much more restrictive constraint, it is more probable to result
+in infeasible models. This issue is managed using the method presented in <em>Proxy duties</em>.</p>
+<p>The last set of constraints establish the domain of the decision variables.</p>
+<p>As shown in equation <a class="reference internal" href="chapter1.html#equation-equation-1">(1)</a>, the objective function…</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetEnvironmentAndModel</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBEnv</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_environment</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">IntParam</span><span class="p">.</span><span class="n">OutputFlag</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_environment</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">IntParam</span><span class="p">.</span><span class="n">LogToConsole</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_environment</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="s">&quot;LogFile&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">_solverLogFileName</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_environment</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">_gurobiUsed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">//Set solver and model parameters (If commented the default values will be used)</span>
+<span class="w">    </span><span class="n">SetSolverParameters</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Create empty model</span>
+<span class="w">    </span><span class="n">_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GRBModel</span><span class="p">(</span><span class="n">_environment</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_model</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">StringAttr</span><span class="p">.</span><span class="n">ModelName</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUROBI_SetCoveringModel&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ui-planeamento-servicos-de-tripulante">
+<span id="uicrew"></span><h2>UI - Planeamento serviços de tripulante<a class="headerlink" href="#ui-planeamento-servicos-de-tripulante" title="Link to this heading"></a></h2>
+<p>No separador principal o utilizador pode definir diversos parâmetros do problema/modelo a resolver, nomeadamente.</p>
+<ul class="simple">
+<li><p>tipos de modelo (cobertura ou partição)</p></li>
+<li><p>tipos de objectivo (singular ou multi-objectivo)</p></li>
+<li><p>restrições adicionais para limites mínimos e máximos de número e/ou percentagem desejada para cada tipologia de serviço na solução final</p></li>
+<li><p>restrições quanto à média das horas trabalhadas (média por tipologia de serviço ou por horário)</p></li>
+<li><p>uso da oferta (viagens em cheio e vazias) para a deslocação dos tripulantes (as <em>boleias</em>)</p></li>
+<li><p>validação da deslocação no final de um serviço</p></li>
+<li><p>não obrigar a cobertura de blocos sem viagens de duração superior a determinado valor</p></li>
+</ul>
+<p id="index-5"><span id="index-4"></span>O utilizador pode escolher entre dois tipos de modelo:</p>
+<ul class="simple">
+<li><p><strong>Modelo de partição.</strong> Não permite sobrecobertura. Cada <em>bloco de trabalho</em> tem de ser coberto obrigatoriamente por apenas um serviço de tripulante.</p></li>
+<li><p><strong>Modelo de cobertura.</strong> Permite sobrecobertura. Cada <em>bloco de trabalho</em> tem de ser coberto por pelo menos um serviço de tripulante, mas poderá ser por mais.</p></li>
+</ul>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<ul class="simple">
+<li><p>Podem existir <em>blocos de trabalho</em> que não são cobertos por qualquer serviço de tripulante dado pelo gerador. Os <em>blocos de trabalho</em> que não são cobertos por qualquer serviço de tripulante não são tidos em conta no modelo.</p></li>
+<li><p>No caso dos problemas de partição, e de forma a garantir que existe sempre solução para o problema, criam-se tantos <em>serviços proxy</em> auxiliares quanto o número de <em>blocos de trabalho</em>. Cada um destes serviços apenas cobre um <em>bloco de trabalho</em> e tem um custo de selecção muito elevado a fim de apenas ser seleccionado em último caso. Desta forma garante-se a viabilidade do problema, com a contrapartida de ficarmos com um modelo maior e com implicações ao nível da função objectivo.</p></li>
+<li><p>Dos dois pontos acima resulta que a solução do problema pode ter blocos de trabalho não cobertos.</p></li>
+</ul>
+</div>
+<p id="index-7"><span id="index-6"></span>O utilizador pode escolher um de entre 4 objectivos, 2 únicos e 2 multi-objectivo.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Objectivos únicos.</strong></dt><dd><ul>
+<li><p>minimizar o custo (computacional).</p></li>
+<li><p>minimizar o número de serviços utilizados.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Multi-objectivo.</strong></dt><dd><ul>
+<li><p>minimizar primeiro o custo e depois o número de serviços.</p></li>
+<li><p>minimizar primeiro o número de serviços e depois o custo.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No que toca às opções multi-objectivo, utilizamos uma abordagem hierárquica, onde se começa por minimizar o objectivo primário, e depois, utilizando a solução do modelo anterior como restrição, optimiza-se o objectivo secundário.</p>
+</div>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="_static/figures/UICrew_parametros_modelo.png"><img alt="_static/figures/UICrew_parametros_modelo.png" src="_static/figures/UICrew_parametros_modelo.png" /></a>
+<figcaption>
+<p><span class="caption-text">Parâmetros do modelo.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p id="index-9"><span id="index-8"></span>O utilizador pode selecionar as tipologias de serviço de tripulante que quer considerar no modelo (Figura <a class="reference internal" href="#uicrew-selecaotiposservico"><span class="std std-ref">Tipos de serviço de tripulante e os seus limites.</span></a>).
+As tipologias disponiveis são aquelas definidas para o horário, e o <a class="reference internal" href="#dutygeneratorengine-cap2"><span class="std std-ref">Duty Generator Engine</span></a> apenas irá criar serviços das tipologias activas.</p>
+<figure class="align-center" id="uicrew-selecaotiposservico">
+<a class="reference internal image-reference" href="_static/figures/UICrew_selecaoTiposServico.png"><img alt="_static/figures/UICrew_selecaoTiposServico.png" src="_static/figures/UICrew_selecaoTiposServico.png" /></a>
+<figcaption>
+<p><span class="caption-text">Tipos de serviço de tripulante e os seus limites.</span><a class="headerlink" href="#uicrew-selecaotiposservico" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Para cada tipologia selecionada é possivel definir valores mínimos e máximos “desejados” para o número de serviços e/ou percentagem
+do número de serviços na solução final. Os limites em termos de número e percentagem podem ser utilizados
+simultaneamente, e a solução será condicionada pela regra mais restrita.</p>
+<p>Estas restrições são ditas “soft”, na medida em que podem não ser respeitadas. A diferença entre o efectivo e desejado (<em>Delta</em>) é tido em conta no modelo e penalizado na função objectivo.
+De momento e para qualquer dos desvios considera-se um custo pre-definido no código  = 1000000.</p>
+<p>O calculo do <em>Delta</em>, para apresentação no UI, apenas se faz caso o valor seja inferior ao minimo, ou superior ao máximo
+estipulado, dado que são as únicas diferenças que são relevantes.</p>
+<p>Inserir referência para a parte em que se explica o modelo e a sua implementação.</p>
+<p id="index-11"><span id="index-10"></span>O utilizador pode escolher entre dois tipos, mutuamente exclusivos, de restrições quanto à média de horas trabalhadas:</p>
+<ul class="simple">
+<li><p>por tipologia de serviço de tripulante.</p></li>
+<li><p>definindo uma média máxima de horas de trabalho para todo o horário.</p></li>
+</ul>
+<figure class="align-center" id="uicrew-mediatrabalho">
+<a class="reference internal image-reference" href="_static/figures/UICrew_mediaTrabalho.png"><img alt="_static/figures/UICrew_mediaTrabalho.png" src="_static/figures/UICrew_mediaTrabalho.png" /></a>
+<figcaption>
+<p><span class="caption-text">Restrições à média de horas de trabalho</span><a class="headerlink" href="#uicrew-mediatrabalho" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p class="rubric">Médias por tipologia de serviço de tripulante</p>
+<p>Define que a média de horas trabalhadas por tipologia não ultrapassa a média definida nos respectivos parâmetros (ver figura <a class="reference internal" href="#uicrew-paramstipologias"><span class="std std-ref">Parâmetros da tipologia de serviço</span></a>).
+O parãmetro <em>Tempo de média</em> representa o valor máximo para a média de horas trabalhadas. Já o parâmetro <em>Tempo para a média</em> é um valor adicional que pode ser somado ao tempo de trabalho de cada serviço para o cálculo da média. Por exemplo, serviços do tipo <em>Seguido</em> por vezes precisam de um <em>Tempo para a média</em> de 30 minutos, quando se usa a restrição da média do horário a 7:30 na Carris.</p>
+<figure class="align-center" id="uicrew-paramstipologias">
+<a class="reference internal image-reference" href="_static/figures/UICrew_paramsTipologias.png"><img alt="_static/figures/UICrew_paramsTipologias.png" src="_static/figures/UICrew_paramsTipologias.png" /></a>
+<figcaption>
+<p><span class="caption-text">Parâmetros da tipologia de serviço</span><a class="headerlink" href="#uicrew-paramstipologias" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p class="rubric">Média do horário</p>
+<p>Define o valor máximo para a média de horas trabalhadas num horário. As tipologias que são <em>Bocado</em> (como atributo) não contam para o cálculo da média.</p>
+<span class="target" id="usaroferta"></span><p id="index-13"><span id="index-12"></span>A opção <em>Usar oferta (viagens)</em>, permite considerar as viagens (em cheio e vazio), ou parte destas,
+para as deslocações dos tripulantes, para além do usual conjunto de deslocações de tripulante definidas <em>a priori</em> pelo
+utilizador. Esta opção pode ser tida em conta juntamente com a <span class="xref std std-ref">validacaoDesloc</span>.
+Ao selecionar esta opção, podemos ainda estipular:</p>
+<ul class="simple">
+<li><p>tempo para compensação de atrasos da viagem anterior (tempo depois)</p></li>
+<li><p>tempo de antecipação antes da próxima viagem (tempo antes)</p></li>
+</ul>
+<p>Estes tempos permitem estabelecer folgas temporais que permitam acomodar eventuais atrasos.</p>
+<figure class="align-center" id="uicrew-usaroferta">
+<a class="reference internal image-reference" href="_static/figures/UICrew_usarOferta.png"><img alt="_static/figures/UICrew_usarOferta.png" src="_static/figures/UICrew_usarOferta.png" /></a>
+<figcaption>
+<p><span class="caption-text">Usar as viagens para deslocações de tripulantes</span><a class="headerlink" href="#uicrew-usaroferta" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O método começa por tentar identificar no conjunto das viagens (em cheio e vazias), uma possivel oportunidade de
+deslocação entre dois pontos verificando o local e hora dos <em>passing times</em> das viagens. Caso exista, ficamos com a primeira a ser encontrada. Dado que podemos ter
+muitas alternativas, decidiu-se manter a primeira encontrada ao invés de calcular o mínimo das
+<em>boleias</em>. Depois de verificar a existência de <em>boleias</em> verificamos a existência de deslocações na lista definida <em>a priori</em>
+pelo utilizador. Por fim, comparamos a <em>boleia</em> e a <em>deslocação</em> e mantemos a alternativa com menor tempo de deslocação.</p>
+</div>
+<span class="target" id="validacaodesloc"></span><p id="index-15"><span id="index-14"></span>Ao considerar a opção <em>Validar deslocação</em> forçamos a que apenas existam serviços de tripulante que comecem e acabem no
+mesmo local ou, no caso de acabarem num local diferente do local inicial, se existir uma ligação
+(crew walking times) entre a localização final e a localização inicial que permita chegar ao nó inicial dentro do tempo
+máximo de trabalho (inclui tempo extra).</p>
+<p>Se para além disso, for selecionada a opção <span class="xref std std-ref">usarOferta</span>, verificar-se-á ainda se existe ligação entre o nó final e
+inicial através de uma boleia numa das viagens da “oferta”.</p>
+<figure class="align-center" id="uicrew-validardeslocacoes">
+<a class="reference internal image-reference" href="_static/figures/UICrew_validarDeslocacoes.png"><img alt="_static/figures/UICrew_validarDeslocacoes.png" src="_static/figures/UICrew_validarDeslocacoes.png" /></a>
+<figcaption>
+<p><span class="caption-text">Validação das deslocações</span><a class="headerlink" href="#uicrew-validardeslocacoes" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<span class="target" id="semvigens"></span><p id="index-17"><span id="index-16"></span>Esta opção permite ao modelo não ter a obrigação de cobrir blocos de trabalho que não tenham viagens e cuja duração
+seja superior ao valor definido pelo utilizador. Estes blocos podem ser cobertos se tal for vantajoso para a resolução do problema.</p>
+<figure class="align-center" id="uicrew-semviagens">
+<a class="reference internal image-reference" href="_static/figures/UICrew_semViagens.png"><img alt="_static/figures/UICrew_semViagens.png" src="_static/figures/UICrew_semViagens.png" /></a>
+<figcaption>
+<p><span class="caption-text">Tempo dos blocos sem viagens</span><a class="headerlink" href="#uicrew-semviagens" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<span class="target" id="infooutput"></span><p id="index-19"><span id="index-18"></span>A informação acerca da solução é apresentada em duas grandes areas (ver figura <a class="reference internal" href="#uicrew-informacaosolucao"><span class="std std-ref">Indicadores gerais da solução</span></a>):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Indicadores gerais da solução</p></li>
+<li><p>Indicadores por tipologia de serviço tripulante</p></li>
+</ul>
+</div></blockquote>
+<figure class="align-center" id="uicrew-informacaosolucao">
+<a class="reference internal image-reference" href="_static/figures/UICrew_informacaoSolucao.png"><img alt="_static/figures/UICrew_informacaoSolucao.png" src="_static/figures/UICrew_informacaoSolucao.png" /></a>
+<figcaption>
+<p><span class="caption-text">Indicadores gerais da solução</span><a class="headerlink" href="#uicrew-informacaosolucao" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p class="rubric">1) Indicadores gerais da solução</p>
+<p>Existem diversos indicadores que podem ser recolhidos da solução. Actualmente, consideram-se os seguintes indicadores:</p>
+<ul class="simple">
+<li><p>Número de serviços</p></li>
+<li><p>Custo computacional</p></li>
+<li><p>Número de blocos não cobertos</p></li>
+<li><p>Número de blocos sobrecobertos</p></li>
+<li><p>Total do tempo de trabalho (sem serviços <em>Bocado</em>)</p></li>
+<li><p>Média do tempo de trabalho (sem serviços <em>Bocado</em>)</p></li>
+<li><p>Total do tempo de trabalho dos serviços <em>Bocado</em></p></li>
+<li><p>Média do tempo de trabalho dos serviços <em>Bocado</em></p></li>
+<li><p>Tempo computacional para resolver o modelo</p></li>
+<li><p>Gap % final</p></li>
+</ul>
+<p>Outros indicadores poderão ser por exemplo:</p>
+<ul class="simple">
+<li><p>Número de ninhos de rato na solução</p></li>
+<li><p>tempo total dos blocos não cobertos.</p></li>
+<li><p>Número de serviços de viatura com blocos por cobrir</p></li>
+<li><p>Número de mudanças de viatura</p></li>
+</ul>
+<p class="rubric">2) Indicadores por tipologia de serviço tripulante</p>
+<p>Para cada tipologia activa apresenta-se a seguinte informação:</p>
+<ul class="simple">
+<li><p>Número de serviços gerados</p></li>
+<li><p>Número de serviços utilizados na solução</p></li>
+<li><p>A percetagem em relação ao total de serviços utilizados na solução</p></li>
+<li><p><em>Delta</em> representa a diferença para o limite (inferior ou seperior) desejado. O <em>Delta</em> apenas existe se o número de serviços for menor que o mínimo ou maior do que o máximo.</p></li>
+<li><p>Tempo de trabalho total</p></li>
+<li><p>Tempo de trabalho médio</p></li>
+</ul>
+<p>Outros indicadores que também podem ser tidos em conta:</p>
+<ul class="simple">
+<li><p>Total horas extraordinárias</p></li>
+</ul>
+</section>
+<section id="nos-como-pontos-de-rendicao-dependente-da-linha">
+<h2>Nós como pontos de rendição dependente da linha<a class="headerlink" href="#nos-como-pontos-de-rendicao-dependente-da-linha" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="chapter1.html" class="btn btn-neutral float-left" title="Capitulo 1: Serviços de viatura" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="TRLDT.html" class="btn btn-neutral float-right" title="Capítulo 3: TRLDT" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Bruno Oliveira.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
